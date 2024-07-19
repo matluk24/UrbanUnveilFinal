@@ -22,8 +22,7 @@ public class User {
 	    @JoinColumn(name = "role_id")
 	    private RoleEnum role;
 		
-		public User (Long id, String name, String surname, String email, String CF, String password) {
-			this.id = id;
+		public User (String name, String surname, String email, String CF, String password) {
 			this.name = name;
 			this.surname = surname;
 			this.email = email;

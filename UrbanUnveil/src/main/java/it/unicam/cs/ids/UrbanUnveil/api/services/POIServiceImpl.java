@@ -22,13 +22,13 @@ private POIRepository poiRepo;
 	}
 
 	@Override
-	public POI addPOI(POI p) {
+	public POI add(POI p) {
 		return poiRepo.save(p);
 	}
 	
 
 	@Override
-	public POI addPOI(OSMNode n, List<Content> c, User u, StateEnum s) {
+	public POI add(OSMNode n, List<Content> c, User u, StateEnum s) {
 		if (n==null || c==null) {
 			throw new NullPointerException();
 		}
@@ -37,7 +37,7 @@ private POIRepository poiRepo;
 	}
 
 	@Override
-	public boolean removePOIById(Long id) {
+	public boolean removeById(Long id) {
 		if (poiRepo.existsById(id)) {
 			poiRepo.deleteById(id);
 			return true;
@@ -46,12 +46,12 @@ private POIRepository poiRepo;
 	}
 
 	@Override
-	public List<POI> getAllPOI() {
+	public List<POI> getAll() {
 		return poiRepo.findAll();
 	}
 
 	@Override
-	public POI getPOIById(Long id) {
+	public POI getById(Long id) {
 		if(poiRepo.existsById(id)) {
 			return poiRepo.findById(id).get();
 		}

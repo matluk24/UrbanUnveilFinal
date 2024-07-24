@@ -40,11 +40,12 @@ public class UserController {
 	}
 	
 	@DeleteMapping("/remove")
-	public HttpStatus remove(@RequestBody User u){
+	public ResponseEntity<HttpStatus> remove(@RequestBody User u){
+		HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
 		if(service.remove(u)) {
-			return  HttpStatus.OK;
+			httpStatus =   HttpStatus.OK;
 		}
-		return HttpStatus.BAD_REQUEST;
+		return new ResponseEntity<HttpStatus>(httpStatus);
 	}
 	
 	@GetMapping("/getAll")

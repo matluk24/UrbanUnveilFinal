@@ -35,38 +35,38 @@ public class POIController {
 	}
 	
 	@PostMapping("/add")
-	public ResponseEntity<POI> addPOI(@RequestBody POI p) {
+	public ResponseEntity<POI> add(@RequestBody POI p) {
 		if(p.getAutore().getRole().equals(RoleEnum.TRUSTEDCONTRIBUTOR)) {
 			p.setStato(StateEnum.APPROVED);
 		}
 		else {
 			p.setStato(StateEnum.WAITING);
 		}
-		return new ResponseEntity<POI>(service.addPOI(p), HttpStatus.OK);
+		return new ResponseEntity<POI>(service.add(p), HttpStatus.OK);
 		
 	}
 	
 	@PostMapping("/addwithparam")
-	public ResponseEntity<POI> addPOI(@RequestBody OSMNode n, @RequestBody List<Content> c, @RequestBody User u) {
+	public ResponseEntity<POI> add(@RequestBody OSMNode n, @RequestBody List<Content> c, @RequestBody User u) {
 		if(u.getRole().equals(RoleEnum.TRUSTEDCONTRIBUTOR)) {
-			return new ResponseEntity<POI>(service.addPOI(n, c, u, StateEnum.APPROVED), HttpStatus.OK);
+			return new ResponseEntity<POI>(service.add(n, c, u, StateEnum.APPROVED), HttpStatus.OK);
 		}
-		return new ResponseEntity<POI>(service.addPOI(n, c, u, null), HttpStatus.OK);
+		return new ResponseEntity<POI>(service.add(n, c, u, null), HttpStatus.OK);
 	}
 	
 	@GetMapping("/all")
-	public ResponseEntity<List<POI>> getAllPOI() {
-			return new ResponseEntity<List<POI>>(service.getAllPOI(), HttpStatus.OK);
+	public ResponseEntity<List<POI>> getAll() {
+			return new ResponseEntity<List<POI>>(service.getAll(), HttpStatus.OK);
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<POI> getPOIByID(@RequestBody Long id) {
-			return new ResponseEntity<POI>(service.getPOIById(id), HttpStatus.OK);
+	public ResponseEntity<POI> getByID(@RequestBody Long id) {
+			return new ResponseEntity<POI>(service.getById(id), HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<?> removePOI(@RequestBody Long id) {
-		if(service.removePOIById(id)) {
+	public ResponseEntity<?> remove(@RequestBody Long id) {
+		if(service.removeById(id)) {
 			return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 		}
 		else {

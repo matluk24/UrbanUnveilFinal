@@ -10,10 +10,10 @@ import it.unicam.cs.ids.UrbanUnveil.api.models.User;
 
 public interface POIService {
 
-	public POI addPOI(POI p);
-	public POI addPOI(OSMNode n, List<Content> c, User u, StateEnum s);
-	public boolean removePOIById(Long id);
-	public List<POI> getAllPOI();
-	public POI getPOIById(Long id);
+	public POI add(POI p);
+	public POI add(OSMNode n, List<Content> c, User u, StateEnum s);
+	public boolean removeById(Long id);
+	public List<POI> getAll();
+	public POI getById(Long id);
 	
 }

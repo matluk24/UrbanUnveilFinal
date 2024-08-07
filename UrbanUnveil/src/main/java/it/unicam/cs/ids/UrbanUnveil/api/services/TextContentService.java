@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.multipart.MultipartFile;
 
 import it.unicam.cs.ids.UrbanUnveil.api.models.Content;
 import it.unicam.cs.ids.UrbanUnveil.api.models.TextContent;
@@ -16,6 +17,7 @@ public class TextContentService implements ContentService<TextContent> {
 
 	
 	private ContentRepository repo;
+	private static final String UPLOAD_DIR="/src/main/resources/text";
 	
 	@Autowired
 	public TextContentService(ContentRepository r) {
@@ -28,6 +30,7 @@ public class TextContentService implements ContentService<TextContent> {
 	
 	@Override
 	public Content save(TextContent content) {
+		MultipartFile file;
 		return repo.save(content);
 	}
 
@@ -89,7 +92,7 @@ public class TextContentService implements ContentService<TextContent> {
 		Content c = this.load(i);
 		String file="";
 		
-		File f = new File(System.getProperty("user.dir")+"/tmp", c.getTitle()+".txt");
+		File f = new File(UPLOAD_DIR, c.getTitle()+".txt");
 		f.setWritable(true);
 		f.setReadable(true);
 		c = this.update(i,  c.getTitle(),  c.getDescr(), f.getCanonicalPath());

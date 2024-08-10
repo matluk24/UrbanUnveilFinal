@@ -1,5 +1,7 @@
 package it.unicam.cs.ids.UrbanUnveil.api.Controller;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,14 +28,14 @@ public class ContentController {
     private ContentServiceFactory contentServiceFactory;
     
     @PostMapping("/save")
-    public void saveContent(@RequestBody Content content) {
+    public ResponseEntity<String> saveContent(@RequestBody Content content) throws IOException {
         ContentService contentService = contentServiceFactory.getService(content);
-        contentService.save(content);
-      //TODO adattamento a ResponseEntity
+        
+        return contentService.save(content);
     }
 
     @GetMapping("/load")
-    public Content loadContent(@RequestBody Long id, ContentEnum contentEnum) {
+    public ResponseEntity<Content> loadContent(@RequestBody Long id, ContentEnum contentEnum) throws IOException {
         // Logica per determinare il tipo di contenuto basato su contentEnum
         Content content = null;
         switch (contentEnum) {
@@ -48,12 +50,18 @@ public class ContentController {
                 break;
         }
         ContentService contentService = contentServiceFactory.getService(content);
-        return contentService.load(id);
+        
+        Content c = contentService.load(id);
+        if (c == null) {
+        	return new ResponseEntity<Content>(c, HttpStatus.BAD_REQUEST);
+        }
+        
+        return new ResponseEntity<Content>(c, HttpStatus.OK);
         
         //TODO adattamento a ResponseEntity
     }
     @DeleteMapping("/delete")
-    public void deleteContent(@RequestBody Long id, ContentEnum contentEnum) {
+    public  ResponseEntity<String>  deleteContent(@RequestBody Long id, ContentEnum contentEnum) throws IOException {
         // Logica per determinare il tipo di contenuto basato su contentEnum
         Content content = null;
         switch (contentEnum) {
@@ -68,7 +76,7 @@ public class ContentController {
                 break;
         }
         ContentService contentService = contentServiceFactory.getService(content);
-        contentService.delete(id);
+        return contentService.delete(id);
       //TODO adattamento a ResponseEntity
     }
 }

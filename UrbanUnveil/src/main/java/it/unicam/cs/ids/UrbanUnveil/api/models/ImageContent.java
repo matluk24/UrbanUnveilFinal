@@ -1,5 +1,7 @@
 package it.unicam.cs.ids.UrbanUnveil.api.models;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import it.unicam.cs.ids.UrbanUnveil.api.Enum.ContentEnum;
 import it.unicam.cs.ids.UrbanUnveil.api.Enum.StateEnum;
 import jakarta.persistence.Entity;
@@ -19,4 +21,6 @@ public class ImageContent extends Content {
         super(publisher, state, contentRef, title, descr, path);
         this.resolution = resolution;
     }
+    
+
 }

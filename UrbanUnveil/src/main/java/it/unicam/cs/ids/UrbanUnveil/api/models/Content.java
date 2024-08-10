@@ -72,5 +72,7 @@ public abstract class Content {
 	public String toString() {
 		return "Content [Id=" + Id + ", state=" + content + ", descr=" + descr + "]";
 	}
+	
+	//TODO IS Null method
 
 }

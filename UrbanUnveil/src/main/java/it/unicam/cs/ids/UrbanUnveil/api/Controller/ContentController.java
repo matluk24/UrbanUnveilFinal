@@ -28,10 +28,18 @@ public class ContentController {
     private ContentServiceFactory contentServiceFactory;
     
     @PostMapping("/save")
-    public ResponseEntity<String> saveContent(@RequestBody Content content) throws IOException {
+    public ResponseEntity<Content> saveContent(@RequestBody Content content) throws IOException {
         ContentService contentService = contentServiceFactory.getService(content);
         
-        return contentService.save(content);
+        Content c = contentService.save(content);
+        HttpStatus httpStatus = HttpStatus.CONFLICT;
+        
+        if(c.equals(content)) {
+        	httpStatus = HttpStatus.OK;
+        }else if (c == null)
+			httpStatus = HttpStatus.BAD_REQUEST;
+        
+        return new ResponseEntity<Content>(c, httpStatus);
     }
 
     @GetMapping("/load")
@@ -52,16 +60,18 @@ public class ContentController {
         ContentService contentService = contentServiceFactory.getService(content);
         
         Content c = contentService.load(id);
-        if (c == null) {
-        	return new ResponseEntity<Content>(c, HttpStatus.BAD_REQUEST);
+        HttpStatus httpStatus = HttpStatus.NOT_FOUND;
+         
+        if(c.equals(content)) {
+        	httpStatus = HttpStatus.OK;
         }
         
-        return new ResponseEntity<Content>(c, HttpStatus.OK);
-        
-        //TODO adattamento a ResponseEntity
-    }
+        return new ResponseEntity<Content>(c, httpStatus);
+        	
+        }
+    
     @DeleteMapping("/delete")
-    public  ResponseEntity<String>  deleteContent(@RequestBody Long id, ContentEnum contentEnum) throws IOException {
+    public  ResponseEntity<Content>  deleteContent(@RequestBody Long id, ContentEnum contentEnum) throws IOException {
         // Logica per determinare il tipo di contenuto basato su contentEnum
         Content content = null;
         switch (contentEnum) {
@@ -76,7 +86,30 @@ public class ContentController {
                 break;
         }
         ContentService contentService = contentServiceFactory.getService(content);
-        return contentService.delete(id);
-      //TODO adattamento a ResponseEntity
+        Content c = contentService.load(id);
+        HttpStatus httpStatus = HttpStatus.NOT_FOUND;
+         
+        if(c==null) {
+        	httpStatus = HttpStatus.OK;
+        }
+        
+        return new ResponseEntity<Content>(c, httpStatus);
+        	
     }
+    
+    @PostMapping("/update")
+    public ResponseEntity<Content> updateContent(@RequestBody Content content) throws IOException {
+        ContentService contentService = contentServiceFactory.getService(content);
+        
+        Content c = contentService.update(content);
+        HttpStatus httpStatus = HttpStatus.CONFLICT;
+        
+        if(c.equals(content)) {
+        	httpStatus = HttpStatus.OK;
+        }else if (c == null)
+			httpStatus = HttpStatus.BAD_REQUEST;
+        
+        return new ResponseEntity<Content>(c, httpStatus);
+    }
+    
 }

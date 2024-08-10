@@ -1,12 +1,13 @@
 package it.unicam.cs.ids.UrbanUnveil.api.services;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import it.unicam.cs.ids.UrbanUnveil.api.models.Content;
@@ -29,47 +30,49 @@ public class TextContentService implements ContentService<TextContent> {
 	}
 	
 	@Override
-	public Content save(TextContent content) {
-		MultipartFile file;
-		return repo.save(content);
+	public Content save(TextContent content) throws IOException {
+		MultipartFile file = content.getFile();
+		if (file.isEmpty()) {
+			return null;
+		}
+		 if(content.equals(repo.save(content))){
+			 return content;
+		 }
+		 return new TextContent();
 	}
 
 	@Override
-	public Content load(Long id) {
+	public Content load(Long id) throws IOException {
 		if(repo.existsById(id)) {
 			return repo.findById(id).get();
-		}
-		return null;
+		 }
+		 return new TextContent();
 	}
 
 	@Override
-	public boolean delete(Long id) {
+	public Content delete(Long id) throws IOException{
 		if(repo.existsById(id)) {
 			repo.deleteById(id);
-			return true;
+			return null;
 		}
-		return false;
+		return new TextContent();
 
 	}
 	
 	@Override
-	public Content update(Long id, String t, String d, String p) {
-		Content c = this.load(id);
-		if(t!=null) {
-			c.setTitle(t);
+	public Content update(TextContent c) throws IOException {
+		MultipartFile file = c.getFile();
+		if (file.isEmpty()) {
+			return null;
 		}
-		if(d!=null) {
-			c.setDescr(t);
-		}
-		if(p!=null) {
-			c.setPath(t);
-		}
-		
-		return repo.saveAndFlush(c);
+		 if(c.equals(repo.saveAndFlush(c))){
+			 return c;
+		 }
+		 return new TextContent();
 		
 	}
 	
-	public String getTextFromFile(Long i) throws FileNotFoundException {
+	public String getTextFromFile(Long i) throws IOException {
 		
 		String result="";
 		Content c = this.load(i);
@@ -89,13 +92,14 @@ public class TextContentService implements ContentService<TextContent> {
 	}
 	
 	public String writeArticle(Long i, String userInput) throws IOException  {
-		Content c = this.load(i);
+		TextContent c = (TextContent) this.load(i);
 		String file="";
 		
 		File f = new File(UPLOAD_DIR, c.getTitle()+".txt");
 		f.setWritable(true);
 		f.setReadable(true);
-		c = this.update(i,  c.getTitle(),  c.getDescr(), f.getCanonicalPath());
+		c.setPath(f.getCanonicalPath());
+		c = (TextContent) this.update(c);
 		if(!f.exists()) {
 			f.createNewFile();
 			System.out.println("The file has been created in the following path: "+f.getCanonicalPath());

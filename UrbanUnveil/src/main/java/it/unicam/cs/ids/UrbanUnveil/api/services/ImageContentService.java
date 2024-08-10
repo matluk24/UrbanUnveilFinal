@@ -1,9 +1,14 @@
 package it.unicam.cs.ids.UrbanUnveil.api.services;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import it.unicam.cs.ids.UrbanUnveil.api.models.Content;
 import it.unicam.cs.ids.UrbanUnveil.api.models.ImageContent;
+import it.unicam.cs.ids.UrbanUnveil.api.models.TextContent;
 import it.unicam.cs.ids.UrbanUnveil.api.repo.ContentRepository;
 
 public class ImageContentService implements ContentService<ImageContent> {
@@ -20,42 +25,37 @@ public class ImageContentService implements ContentService<ImageContent> {
 	}
 
 	@Override
-	public Content save(ImageContent content) {
-		return repo.save(content);
-	}
-
+	public Content save(ImageContent content) throws IOException{
+		if(content.equals(repo.save(content))){
+			 return content;
+		 }
+		 return new ImageContent();
+	}	 
+	
 	@Override
-	public Content load(Long id) {
+	public Content load(Long id) throws IOException{
 		if(repo.existsById(id)) {
 			return repo.findById(id).get();
-		}
-		return null;
+		 }
+		return new ImageContent();
 	}
 
 	@Override
-	public boolean delete(Long id) {
+	public Content delete(Long id) throws IOException{
 		if(repo.existsById(id)) {
 			repo.deleteById(id);
-			return true;
+			return null;
 		}
-		return false;
+		return new ImageContent();
 
 	}
 	
 	@Override
-	public Content update(Long id, String t, String d, String p) {
-		Content c = this.load(id);
-		if(t!=null) {
-			c.setTitle(t);
-		}
-		if(d!=null) {
-			c.setDescr(t);
-		}
-		if(p!=null) {
-			c.setPath(t);
-		}
-		
-		return repo.saveAndFlush(c);
+	public Content update(ImageContent c) throws IOException {
+		 if(c.equals(repo.saveAndFlush(c))){
+			 return c;
+		 }
+		 return new ImageContent();
 		
 	}
 

@@ -24,6 +24,10 @@ public class ContentServiceFactory {
     @Autowired
     private TextContentService textContentService;
 
+	public ContentServiceFactory() {
+		
+	}
+
     public ContentService<?> getService(Content content) {
         if (content instanceof ImageContent) {
             return imageContentService;

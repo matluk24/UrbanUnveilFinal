@@ -1,5 +1,6 @@
 package it.unicam.cs.ids.UrbanUnveil.api.models;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,7 +23,8 @@ public class Itinerario {
 	
 	public Itinerario(User u) {
 		publisher=u;
-		
+		stops=new LinkedList<POI>();
+		contents = new LinkedList<Content>();
 	}
 	
 	public User getPublisher() {
@@ -37,11 +39,17 @@ public class Itinerario {
 	public void setStops(List<POI> stops) {
 		this.stops = stops;
 	}
+	public void addStops(List<POI> stops) {
+		this.stops.addAll(stops);
+	}
 	public List<Content> getContents() {
 		return contents;
 	}
 	public void setContents(List<Content> contents) {
 		this.contents = contents;
+	}
+	public void addContents(List<Content> contents) {
+		this.contents.addAll(contents);
 	}
 	@Override
 	public int hashCode() {

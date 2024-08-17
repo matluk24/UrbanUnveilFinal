@@ -20,6 +20,10 @@ private POIRepository poiRepo;
 		this.poiRepo=poiRepo;
 		
 	}
+	
+	public POIServiceImpl() {
+		
+	}
 
 	@Override
 	public POI add(POI p) {

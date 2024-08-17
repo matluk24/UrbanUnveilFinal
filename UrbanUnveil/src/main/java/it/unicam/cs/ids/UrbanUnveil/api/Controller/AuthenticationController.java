@@ -38,7 +38,7 @@ public class AuthenticationController {
 		return new ResponseEntity<User>(u, httpStatus);
 	}
 	
-	@PostMapping("/Sighin")
+	@PostMapping("/Signin")
 	public ResponseEntity<User> sighin(@RequestBody User user){
 		//TODO fare la registrazione
 		return null;

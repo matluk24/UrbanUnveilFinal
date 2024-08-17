@@ -27,6 +27,14 @@ public class ContentController {
     @Autowired
     private ContentServiceFactory contentServiceFactory;
     
+    public ContentController(ContentServiceFactory o) {
+    	contentServiceFactory=o;
+	}
+	
+	public ContentController() {
+		
+	}
+    
     @PostMapping("/save")
     public ResponseEntity<Content> saveContent(@RequestBody Content content) throws IOException {
         ContentService contentService = contentServiceFactory.getService(content);

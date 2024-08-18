@@ -4,12 +4,17 @@ import java.util.Objects;
 
 import it.unicam.cs.ids.UrbanUnveil.api.Enum.StateEnum;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class POI {
@@ -18,13 +23,16 @@ public class POI {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	private OSMNode posizione;
+	@OneToMany
+	@JoinColumn(name="Content_ID")
 	private List<Content> contenuti;
+	@OneToOne
 	private User autore;
 	private StateEnum stato;
 	
-	public POI (OSMNode n, List<Content> c, User u, StateEnum s) {
+	public POI (OSMNode n, User u, StateEnum s) {
 		posizione=n;
-		contenuti=c;
+		contenuti = new LinkedList<Content>();
 		autore=u;
 		if(s==null) {
 			stato=StateEnum.WAITING;
@@ -45,6 +53,10 @@ public class POI {
 	}
 	public void setContenuti(List<Content> contenuti) {
 		this.contenuti = contenuti;
+	}
+	
+	public void addContenuti(List<Content> contenuti) {
+		this.contenuti.addAll(contenuti);
 	}
 
 	public User getAutore() {

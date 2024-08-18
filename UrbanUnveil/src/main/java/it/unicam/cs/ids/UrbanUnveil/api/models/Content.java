@@ -14,7 +14,7 @@ public abstract class Content {
 	@ManyToOne
 	private User publisher;
 	private StateEnum state;
-	private  ContentEnum content;
+	private ContentEnum content;
 	private String title;
 	private String descr;
 	private String path;

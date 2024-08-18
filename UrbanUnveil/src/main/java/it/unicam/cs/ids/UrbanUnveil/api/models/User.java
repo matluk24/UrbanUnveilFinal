@@ -18,7 +18,7 @@ public class User {
 	    private String email;
 		private String CF;
 		private String password;
-		@ManyToOne
+		@Embedded
 	    @JoinColumn(name = "role_id")
 	    private RoleEnum role;
 		

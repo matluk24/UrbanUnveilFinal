@@ -36,7 +36,8 @@ private POIRepository poiRepo;
 		if (n==null || c==null) {
 			throw new NullPointerException();
 		}
-		POI p = new POI(n, c, u, s);
+		POI p = new POI(n, u, s);
+		p.addContenuti(c);
 		return poiRepo.save(p);
 	}
 

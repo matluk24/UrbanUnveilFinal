@@ -48,6 +48,11 @@ public class UserController {
 		return new ResponseEntity<HttpStatus>(httpStatus);
 	}
 	
+	@GetMapping("/get")
+	public ResponseEntity<User> get(@RequestBody Long id){
+		return new ResponseEntity<User>(service.get(id), HttpStatus.OK);
+	}
+	
 	@GetMapping("/getAll")
 	public ResponseEntity<List<User>> getAll(){
 		return new ResponseEntity<List<User>>(service.getAll(), HttpStatus.OK);

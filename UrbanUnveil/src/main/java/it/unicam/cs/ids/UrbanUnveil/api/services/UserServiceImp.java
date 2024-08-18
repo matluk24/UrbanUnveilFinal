@@ -38,6 +38,14 @@ public class UserServiceImp implements UserService {
 		userRepo.delete(u);
 		return userRepo.existsById(u.getId());
 	}
+	
+	@Override
+	public User get(Long id) {
+		if(userRepo.existsById(id)) {
+			return userRepo.findById(id).get();
+		}
+		return null;
+	}
 
 	@Override
 	public List<User> getAll() {

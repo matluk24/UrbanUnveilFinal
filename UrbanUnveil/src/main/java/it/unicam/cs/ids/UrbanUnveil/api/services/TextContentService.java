@@ -6,12 +6,14 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import it.unicam.cs.ids.UrbanUnveil.api.models.Content;
 import it.unicam.cs.ids.UrbanUnveil.api.models.TextContent;
 import it.unicam.cs.ids.UrbanUnveil.api.repo.ContentRepository;
 
+@Service
 public class TextContentService implements ContentService<TextContent> {
 
 	
@@ -27,7 +29,7 @@ public class TextContentService implements ContentService<TextContent> {
 		
 	}
 	
-	@Override
+	/*@Override
 	public Content save(TextContent content) throws IOException {
 		MultipartFile file = content.getFile();
 		if (file.isEmpty()) {
@@ -37,7 +39,7 @@ public class TextContentService implements ContentService<TextContent> {
 			 return content;
 		 }
 		 return new TextContent();
-	}
+	}*/
 
 	@Override
 	public Content load(Long id) throws IOException {
@@ -57,7 +59,7 @@ public class TextContentService implements ContentService<TextContent> {
 
 	}
 	
-	@Override
+	/*@Override
 	public Content update(TextContent c) throws IOException {
 		MultipartFile file = c.getFile();
 		if (file.isEmpty()) {
@@ -68,7 +70,7 @@ public class TextContentService implements ContentService<TextContent> {
 		 }
 		 return new TextContent();
 		
-	}
+	}*/
 	
 	public String getTextFromFile(Long i) throws IOException {
 		
@@ -113,6 +115,18 @@ public class TextContentService implements ContentService<TextContent> {
 		file = file+" "+userInput;
 		
 		return file;
+	}
+
+	@Override
+	public Content save(TextContent content) throws IOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Content update(TextContent c) throws IOException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import it.unicam.cs.ids.UrbanUnveil.api.models.User;
 import it.unicam.cs.ids.UrbanUnveil.api.repo.UserRepository;
 
+@Service
 public class UserServiceImp implements UserService {
 	
 	private UserRepository userRepo;

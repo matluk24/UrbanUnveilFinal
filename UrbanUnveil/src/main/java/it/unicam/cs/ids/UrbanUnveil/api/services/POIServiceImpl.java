@@ -3,6 +3,7 @@ package it.unicam.cs.ids.UrbanUnveil.api.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import it.unicam.cs.ids.UrbanUnveil.api.Enum.StateEnum;
 import it.unicam.cs.ids.UrbanUnveil.api.models.Content;
@@ -11,6 +12,7 @@ import it.unicam.cs.ids.UrbanUnveil.api.models.POI;
 import it.unicam.cs.ids.UrbanUnveil.api.models.User;
 import it.unicam.cs.ids.UrbanUnveil.api.repo.POIRepository;
 
+@Service
 public class POIServiceImpl implements POIService {
 	
 private POIRepository poiRepo;

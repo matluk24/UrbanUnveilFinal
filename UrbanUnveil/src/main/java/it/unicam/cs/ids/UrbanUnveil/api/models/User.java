@@ -19,7 +19,7 @@ public class User {
 		private String CF;
 		private String password;
 		@Embedded
-	    @JoinColumn(name = "role_id")
+	    @JoinColumn(name = "role")
 	    private RoleEnum role;
 		
 		public User (String name, String surname, String email, String CF, String password) {

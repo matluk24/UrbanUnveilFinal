@@ -7,6 +7,7 @@ import it.unicam.cs.ids.UrbanUnveil.api.Enum.StateEnum;
 import java.util.LinkedList;
 import java.util.List;
 
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,10 +22,10 @@ public class POI {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
+	//private Long id;
+	@Embedded
 	private OSMNode posizione;
 	@OneToMany
-	@JoinColumn(name="Content_ID")
 	private List<Content> contenuti;
 	@OneToOne
 	private User autore;
@@ -77,7 +78,7 @@ public class POI {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(autore, contenuti, id, posizione, stato);
+		return Objects.hash(autore, contenuti, posizione, stato);
 	}
 
 	@Override
@@ -90,12 +91,12 @@ public class POI {
 			return false;
 		POI other = (POI) obj;
 		return Objects.equals(autore, other.autore) && Objects.equals(contenuti, other.contenuti)
-				&& Objects.equals(id, other.id) && Objects.equals(posizione, other.posizione) && stato == other.stato;
+				&& Objects.equals(posizione, other.posizione) && stato == other.stato;
 	}
 
 	@Override
 	public String toString() {
-		return "POI [id=" + id + ", posizione=" + posizione + ", contenuti=" + contenuti + ", autore=" + autore
+		return "POI [posizione=" + posizione + ", contenuti=" + contenuti + ", autore=" + autore
 				+ ", stato=" + stato + "]";
 	}
 	

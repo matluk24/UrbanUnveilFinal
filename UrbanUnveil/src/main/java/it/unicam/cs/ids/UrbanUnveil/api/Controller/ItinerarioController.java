@@ -39,10 +39,11 @@ public class ItinerarioController {
 	}
 	
 	@PostMapping("/update")
-	public ResponseEntity<Itinerario> update(@RequestBody User u, @RequestBody List<POI> p) { //DA COMPLETARE
-		Itinerario i= new Itinerario(u);
-		i.addStops(p);
-		return new ResponseEntity<Itinerario>(service.save(i), HttpStatus.OK);
+	public ResponseEntity<?> update(@RequestBody Long id, @RequestBody String t) { //DA COMPLETARE
+		if(service.update(id, t)==null) {
+			return new ResponseEntity<HttpStatus>(HttpStatus.NOT_MODIFIED);
+		}
+		return new ResponseEntity<Itinerario>(service.update(id, t), HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/remove")

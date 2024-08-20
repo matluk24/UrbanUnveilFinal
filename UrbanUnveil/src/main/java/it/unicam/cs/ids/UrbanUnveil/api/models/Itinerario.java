@@ -17,6 +17,7 @@ public class Itinerario {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long Id;
+	private String title;
 	@ManyToOne
 	private User publisher;
 	@OneToMany
@@ -35,6 +36,12 @@ public class Itinerario {
 	}
 	public void setPublisher(User publisher) {
 		this.publisher = publisher;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	public List<POI> getStops() {
 		return stops;

@@ -10,6 +10,7 @@ import it.unicam.cs.ids.UrbanUnveil.api.models.Itinerario;
 public interface ItinerarioService {
 
 	public Itinerario save(Itinerario i);
+	public Itinerario update(Long id, String t);
 	public boolean remove(Long id);
 	public Itinerario get(Long id);
 	public List<Itinerario> getAll();

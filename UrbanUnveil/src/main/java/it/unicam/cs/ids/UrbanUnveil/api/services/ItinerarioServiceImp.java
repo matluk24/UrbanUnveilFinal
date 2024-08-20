@@ -27,6 +27,19 @@ private ItinerarioRepository repo;
 	public Itinerario save(Itinerario i) {
 		return repo.save(i);
 	}
+	
+	@Override
+	public Itinerario update(Long id, String t) {
+		Itinerario i=null;;
+		if(repo.existsById(id)) {
+			i = this.get(id);
+		}
+		if(i==null) {
+			return null;
+		}
+		i.setTitle(t);
+		return repo.saveAndFlush(i);
+	}
 
 	@Override
 	public boolean remove(Long id) {

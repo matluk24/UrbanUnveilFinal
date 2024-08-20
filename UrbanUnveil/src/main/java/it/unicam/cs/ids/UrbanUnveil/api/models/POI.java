@@ -22,7 +22,7 @@ public class POI {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	//private Long id;
+	private Long id;
 	@Embedded
 	private OSMNode posizione;
 	@OneToMany
@@ -78,7 +78,7 @@ public class POI {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(autore, contenuti, posizione, stato);
+		return Objects.hash(autore, contenuti, id, posizione, stato);
 	}
 
 	@Override
@@ -91,14 +91,15 @@ public class POI {
 			return false;
 		POI other = (POI) obj;
 		return Objects.equals(autore, other.autore) && Objects.equals(contenuti, other.contenuti)
-				&& Objects.equals(posizione, other.posizione) && stato == other.stato;
+				&& Objects.equals(id, other.id) && Objects.equals(posizione, other.posizione) && stato == other.stato;
 	}
 
 	@Override
 	public String toString() {
-		return "POI [posizione=" + posizione + ", contenuti=" + contenuti + ", autore=" + autore
+		return "POI [id=" + id + ", posizione=" + posizione + ", contenuti=" + contenuti + ", autore=" + autore
 				+ ", stato=" + stato + "]";
 	}
-	
+
+
 	
 }

@@ -1,7 +1,6 @@
 package it.unicam.cs.ids.UrbanUnveil.api.models;
 
 import jakarta.persistence.*;
-import it.unicam.cs.ids.UrbanUnveil.api.Enum.ContentEnum;
 import it.unicam.cs.ids.UrbanUnveil.api.Enum.StateEnum;
 
 @Entity
@@ -14,7 +13,6 @@ public abstract class Content {
 	@ManyToOne
 	private User publisher;
 	private StateEnum state;
-	private ContentEnum content;
 	private String title;
 	private String descr;
 	private String path;
@@ -23,13 +21,20 @@ public abstract class Content {
 		
 	}
 	
-	public Content (User pub, StateEnum state, ContentEnum contentRef, String title, String descr, String path) {
+	public Content (User pub, StateEnum state, String title, String descr, String path) {
 		this.publisher = pub;
 		this.state = state;
-		this.content = contentRef;
 		this.title = title;
 		this.descr = descr;
-		this.path = path;	
+		this.path = path;
+	}
+	
+	public Content(Content content) {
+		this.publisher = content.getPublisher();
+		this.state = content.getState();
+		this.title = content.getTitle();
+		this.descr = content.getDescr();
+		this.path = content.getPath();	
 	}
 	
 	public Long getId() {
@@ -42,9 +47,6 @@ public abstract class Content {
 
 	public StateEnum getState() {
 		return state;
-	}
-	public ContentEnum getContentRef() {
-		return content;
 	}
 	public void setState(StateEnum state) {
 		this.state = state;
@@ -70,7 +72,7 @@ public abstract class Content {
 	
 	@Override
 	public String toString() {
-		return "Content [Id=" + Id + ", state=" + content + ", descr=" + descr + "]";
+		return "Content [Id=" + Id + ", descr=" + descr + "]";
 	}
 	
 	//TODO IS Null method

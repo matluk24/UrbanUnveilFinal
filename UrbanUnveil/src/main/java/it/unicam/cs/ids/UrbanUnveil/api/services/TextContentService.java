@@ -7,7 +7,6 @@ import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import it.unicam.cs.ids.UrbanUnveil.api.models.Content;
 import it.unicam.cs.ids.UrbanUnveil.api.models.TextContent;
@@ -25,6 +24,7 @@ public class TextContentService implements ContentService<TextContent> {
 			repo=r;
 	}
 	
+
 	public TextContentService() {
 		
 	}

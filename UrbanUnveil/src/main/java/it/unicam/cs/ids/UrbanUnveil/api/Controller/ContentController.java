@@ -15,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import it.unicam.cs.ids.UrbanUnveil.api.DesignPattern.ContentServiceFactory;
-import it.unicam.cs.ids.UrbanUnveil.api.Enum.ContentEnum;
 import it.unicam.cs.ids.UrbanUnveil.api.models.Content;
 import it.unicam.cs.ids.UrbanUnveil.api.models.ImageContent;
 import it.unicam.cs.ids.UrbanUnveil.api.models.TextContent;
@@ -41,7 +40,7 @@ public class ContentController {
 
 
     @PostMapping("/uploadContent")
-    public ResponseEntity<Content> handleContentUpload(@RequestBody Content content, MultipartFile file) throws IOException{
+    public ResponseEntity<Content> ContentUpload(@RequestBody Content content, MultipartFile file) throws IOException{
         if (file.isEmpty()) {
             return new ResponseEntity<Content>(content, HttpStatus.BAD_REQUEST);
         }
@@ -55,12 +54,17 @@ public class ContentController {
             if (contentType != null) {
                 if (contentType.startsWith("image/")) {
                 	dest = new File(UPLOAD_DIR +"image/"+ fileName);
+                	content = new ImageContent(content);
                 } else if (contentType.startsWith("video/")) {
                 	dest = new File(UPLOAD_DIR +"video/"+ fileName);
-                } else if (contentType.startsWith("application/pdf")) {
+                	content = new VideoContent(content);
+                } else if (contentType.startsWith("text/plain")) {
                 	dest = new File(UPLOAD_DIR +"file/"+ fileName);
+                	content = new TextContent(content);
                 }
             }
+            
+            
             ContentService contentService = contentServiceFactory.getService(content);
             file.transferTo(dest);
             
@@ -73,50 +77,26 @@ public class ContentController {
         }
        
     @GetMapping("/load")
-    public ResponseEntity<Content> loadContent(@RequestBody Long id, ContentEnum contentEnum) throws IOException {
+    public ResponseEntity<Content> loadContent(@RequestBody Content content) throws IOException {
         // Logica per determinare il tipo di contenuto basato su contentEnum
-        Content content = null;
-        switch (contentEnum) {
-            case IMAGE:
-                content = new ImageContent();
-                break;
-            case VIDEO:
-                content = new VideoContent();
-                break;
-            case TEXT:
-                content = new TextContent();
-                break;
-        }
+
         ContentService contentService = contentServiceFactory.getService(content);
         
-        Content c = contentService.load(id);
+        // TODO prendere il content giusto
         HttpStatus httpStatus = HttpStatus.NOT_FOUND;
          
-        if(c.equals(content)) {
-        	httpStatus = HttpStatus.OK;
-        }
         
-        return new ResponseEntity<Content>(c, httpStatus);
+        return new ResponseEntity<Content>(content, httpStatus);
         	
         }
     
     @DeleteMapping("/delete")
-    public  ResponseEntity<Content>  deleteContent(@RequestBody Long id, ContentEnum contentEnum) throws IOException {
+    public  ResponseEntity<Content>  deleteContent(@RequestBody Content content) throws IOException {
         // Logica per determinare il tipo di contenuto basato su contentEnum
-        Content content = null;
-        switch (contentEnum) {
-            case IMAGE:
-                content = new ImageContent();
-                break;
-            case VIDEO:
-                content = new VideoContent();
-                break;
-            case TEXT:
-                content = new TextContent();
-                break;
-        }
+
         ContentService contentService = contentServiceFactory.getService(content);
-        Content c = contentService.load(id);
+        
+        Content c = contentService.delete(content.getId());
         HttpStatus httpStatus = HttpStatus.NOT_FOUND;
          
         if(c==null) {

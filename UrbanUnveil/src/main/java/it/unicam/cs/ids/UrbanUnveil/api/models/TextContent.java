@@ -1,25 +1,50 @@
 package it.unicam.cs.ids.UrbanUnveil.api.models;
 
-import org.springframework.web.multipart.MultipartFile;
-
-import it.unicam.cs.ids.UrbanUnveil.api.Enum.ContentEnum;
 import it.unicam.cs.ids.UrbanUnveil.api.Enum.StateEnum;
-import jakarta.persistence.Embeddable;
 import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
+
 
 @Entity
 public class TextContent extends Content {
-    private String language;
+	
+	private String encoding; 
+	private Long lineCount;
+
+	private Long wordCount;
     
+	
     //Empty
     public TextContent() {
 
     }
 
-    public TextContent(User publisher, StateEnum state, ContentEnum contentRef, String title, String descr, String path, String language, MultipartFile file) {
-        super(publisher, state, contentRef, title, descr, path);
-        this.language = language;
+    public TextContent(User publisher, StateEnum state, String title, String descr, String path, String endcoding, Long lineCount, Long wordCount) {
+        super(publisher, state, title, descr, path);
+        this.encoding = endcoding;
+        this.lineCount = lineCount;
+        this.wordCount = wordCount;
     }
+    public TextContent(Content content) {
+    	super(content);
+    }
+    public String getEncoding() {
+		return encoding;
+	}
+	public Long getLineCount() {
+		return lineCount;
+	}
+	
+	public Long getWordCount() {
+		return wordCount;
+	}
+	public void setLineCount(Long lineCount) {
+		this.lineCount = lineCount;
+	}
+	public void setWordCount(Long wordCount) {
+		this.wordCount = wordCount;
+	}
 
+	public void setEncoding(String encoding) {
+		this.encoding = encoding;
+	}
 }

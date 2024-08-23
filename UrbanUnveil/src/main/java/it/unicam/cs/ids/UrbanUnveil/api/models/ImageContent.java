@@ -19,8 +19,9 @@ public class ImageContent extends Content {
         this.resolution = resolution;
     }
     
-	public ImageContent(Content content) {
-		super(content);
+	public ImageContent(Content content, String dest) {
+		super(content, dest);
+		//TODO add param type
 	}
 	public String getResolution() {
 		return resolution;

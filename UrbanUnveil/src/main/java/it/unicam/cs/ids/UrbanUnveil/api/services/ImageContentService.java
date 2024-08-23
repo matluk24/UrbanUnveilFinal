@@ -28,6 +28,7 @@ public class ImageContentService implements ContentService<ImageContent> {
 
 	@Override
 	public Content save(ImageContent content) throws IOException{
+		
 		if(content.equals(repo.save(content))){
 			 return content;
 		 }

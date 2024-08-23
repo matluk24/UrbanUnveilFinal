@@ -17,9 +17,10 @@ public class VideoContent extends Content {
         this.duration = duration;
     }
     
-    public VideoContent(Content content) {
-    	super(content);
+    public VideoContent(Content content, String dest) {
+    	super(content, dest);
     	duration = 0;
+    	//TODO add param type
     }
     public int getDuration() {
 		return duration;

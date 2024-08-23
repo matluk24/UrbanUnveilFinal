@@ -1,6 +1,9 @@
 package it.unicam.cs.ids.UrbanUnveil.api.models;
 
 import jakarta.persistence.*;
+
+import java.io.File;
+
 import it.unicam.cs.ids.UrbanUnveil.api.Enum.StateEnum;
 
 @Entity
@@ -29,12 +32,12 @@ public abstract class Content {
 		this.path = path;
 	}
 	
-	public Content(Content content) {
+	public Content(Content content, String dest) {
 		this.publisher = content.getPublisher();
 		this.state = content.getState();
 		this.title = content.getTitle();
 		this.descr = content.getDescr();
-		this.path = content.getPath();	
+		this.path = dest;	
 	}
 	
 	public Long getId() {

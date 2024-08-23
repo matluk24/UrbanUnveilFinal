@@ -24,8 +24,9 @@ public class TextContent extends Content {
         this.lineCount = lineCount;
         this.wordCount = wordCount;
     }
-    public TextContent(Content content) {
-    	super(content);
+    public TextContent(Content content, String dest) {
+    	super(content, dest);
+    	//TODO add param type
     }
     public String getEncoding() {
 		return encoding;

@@ -45,28 +45,15 @@ public class ContentController {
             return new ResponseEntity<Content>(content, HttpStatus.BAD_REQUEST);
         }
 
-            String contentType = file.getContentType();
-            String fileName = file.getOriginalFilename();
-            File dest = null;
 
 
             // Gestione specifica basata sul tipo di file
-            if (contentType != null) {
-                if (contentType.startsWith("image/")) {
-                	dest = new File(UPLOAD_DIR +"image/"+ fileName);
-                	content = new ImageContent(content);
-                } else if (contentType.startsWith("video/")) {
-                	dest = new File(UPLOAD_DIR +"video/"+ fileName);
-                	content = new VideoContent(content);
-                } else if (contentType.startsWith("text/plain")) {
-                	dest = new File(UPLOAD_DIR +"file/"+ fileName);
-                	content = new TextContent(content);
-                }
-            }
+        	content = hendlerContentCostructor(content, file);
             
-            
+            //estraggo il Service giusto e salvo il file nella cartella di destinazione
             ContentService contentService = contentServiceFactory.getService(content);
-            file.transferTo(dest);
+            file.transferTo(new File(content.getPath()));
+            
             
             Content c = contentService.save(content);
             HttpStatus httpStatus = HttpStatus.CONFLICT;
@@ -120,6 +107,47 @@ public class ContentController {
 			httpStatus = HttpStatus.BAD_REQUEST;
         
         return new ResponseEntity<Content>(c, httpStatus);
+    }
+    public Content hendlerContentCostructor(Content content, MultipartFile file) {
+        
+    	String contentType = file.getContentType();
+
+    	
+    	if (contentType != null) {
+            if (contentType.startsWith("image/")) {
+            	
+            	return hendlerImageContent(content, file);
+            	
+            } else if (contentType.startsWith("video/")) {
+
+            	return hendleVideoContent(content, file);
+            	
+            } else if (contentType.startsWith("text/plain")) {
+  
+            	return hendlerTextContent(content, file);
+            }
+        }
+    	return null;
+    	
+    }
+    
+    public Content hendlerImageContent(Content content, MultipartFile file) {
+    	File dest = new File(UPLOAD_DIR +"image/"+ file.getOriginalFilename());
+    	//TODO add param type
+    	
+    	return new ImageContent(content, dest.toString());
+    }
+    public Content hendleVideoContent(Content content, MultipartFile file) {
+    	File dest = new File(UPLOAD_DIR +"video/"+ file.getOriginalFilename());
+    	//TODO add param type
+    	
+    	return new VideoContent(content, dest.toString());
+    }
+    public Content hendlerTextContent(Content content, MultipartFile file) {
+    	File dest = new File(UPLOAD_DIR +"file/"+ file.getOriginalFilename());
+    	//TODO add param type
+    	
+    	return new TextContent(content, dest.toString());
     }
     
 }

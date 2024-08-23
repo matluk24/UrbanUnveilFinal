@@ -48,7 +48,7 @@ public class ContentController {
 
 
             // Gestione specifica basata sul tipo di file
-        	content = hendlerContentCostructor(content, file);
+        	content = handlerContentCostructor(content, file);
             
             //estraggo il Service giusto e salvo il file nella cartella di destinazione
             ContentService contentService = contentServiceFactory.getService(content);
@@ -108,7 +108,9 @@ public class ContentController {
         
         return new ResponseEntity<Content>(c, httpStatus);
     }
-    public Content hendlerContentCostructor(Content content, MultipartFile file) {
+    
+    
+    private Content handlerContentCostructor(Content content, MultipartFile file) {
         
     	String contentType = file.getContentType();
 
@@ -116,34 +118,34 @@ public class ContentController {
     	if (contentType != null) {
             if (contentType.startsWith("image/")) {
             	
-            	return hendlerImageContent(content, file);
+            	return handlerImageContent(content, file);
             	
             } else if (contentType.startsWith("video/")) {
 
-            	return hendleVideoContent(content, file);
+            	return handleVideoContent(content, file);
             	
             } else if (contentType.startsWith("text/plain")) {
   
-            	return hendlerTextContent(content, file);
+            	return handlerTextContent(content, file);
             }
         }
     	return null;
     	
     }
     
-    public Content hendlerImageContent(Content content, MultipartFile file) {
+    private Content handlerImageContent(Content content, MultipartFile file) {
     	File dest = new File(UPLOAD_DIR +"image/"+ file.getOriginalFilename());
     	//TODO add param type
     	
     	return new ImageContent(content, dest.toString());
     }
-    public Content hendleVideoContent(Content content, MultipartFile file) {
+    private Content handleVideoContent(Content content, MultipartFile file) {
     	File dest = new File(UPLOAD_DIR +"video/"+ file.getOriginalFilename());
     	//TODO add param type
     	
     	return new VideoContent(content, dest.toString());
     }
-    public Content hendlerTextContent(Content content, MultipartFile file) {
+    private Content handlerTextContent(Content content, MultipartFile file) {
     	File dest = new File(UPLOAD_DIR +"file/"+ file.getOriginalFilename());
     	//TODO add param type
     	

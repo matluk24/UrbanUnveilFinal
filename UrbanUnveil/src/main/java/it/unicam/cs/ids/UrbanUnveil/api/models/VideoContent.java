@@ -12,7 +12,7 @@ public class VideoContent extends Content {
     private String width;
     private String height;
     
-    private static final String UPLOAD_DIR= "./Utils/Content/videos/";
+    private static final String UPLOAD_DIR= "./Utils/Content/video/";
     
   //Empty
     public VideoContent() {

@@ -10,7 +10,7 @@ public class TextContent extends Content {
 	private Long lineCount;
 	private Long wordCount;
 	private Long size;
-	private static final String UPLOAD_DIR= "./Utils/Content/files/";
+	private static final String UPLOAD_DIR= "./Utils/Content/text/plain";
 	
     //Empty
     public TextContent() {

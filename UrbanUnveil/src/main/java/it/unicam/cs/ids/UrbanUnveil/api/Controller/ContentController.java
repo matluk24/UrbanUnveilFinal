@@ -14,11 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import it.unicam.cs.ids.UrbanUnveil.api.DesignPattern.ContentHandlerFactory;
 import it.unicam.cs.ids.UrbanUnveil.api.DesignPattern.ContentServiceFactory;
+import it.unicam.cs.ids.UrbanUnveil.api.Utils.ContentHandler;
 import it.unicam.cs.ids.UrbanUnveil.api.models.Content;
-import it.unicam.cs.ids.UrbanUnveil.api.models.ImageContent;
-import it.unicam.cs.ids.UrbanUnveil.api.models.TextContent;
-import it.unicam.cs.ids.UrbanUnveil.api.models.VideoContent;
 import it.unicam.cs.ids.UrbanUnveil.api.services.ContentService;
 
 @RestController
@@ -27,11 +26,14 @@ public class ContentController {
 
     @Autowired
     private ContentServiceFactory contentServiceFactory;
-	private static final String UPLOAD_DIR = "./Utils/Content/";
     
-    public ContentController(ContentServiceFactory o) {
-    	contentServiceFactory=o;
-	}
+    @Autowired
+    private ContentHandlerFactory contentHandlerFactory;
+    
+    public ContentController(ContentServiceFactory contentServiceFactory, ContentHandlerFactory contentHandlerFactory) {
+        this.contentServiceFactory = contentServiceFactory;
+        this.contentHandlerFactory = contentHandlerFactory;
+    }
 	
 	public ContentController() {
 		
@@ -47,8 +49,10 @@ public class ContentController {
 
 
 
-            // Gestione specifica basata sul tipo di file
-        	content = handlerContentCostructor(content, file);
+        	// Estraggo l'handler giusto e creo l'oggetto Content
+        	String contentType = file.getContentType();
+        	ContentHandler handler = contentHandlerFactory.getHandler(contentType);
+        	content = handler.handleContent(content, file);
             
             //estraggo il Service giusto e salvo il file nella cartella di destinazione
             ContentService contentService = contentServiceFactory.getService(content);
@@ -64,7 +68,7 @@ public class ContentController {
         }
        
     @GetMapping("/load")
-    public ResponseEntity<Content> loadContent(@RequestBody Content content) throws IOException {
+    public ResponseEntity<Content> loadContent(@RequestBody Content content) throws IOException{
         // Logica per determinare il tipo di contenuto basato su contentEnum
 
         ContentService contentService = contentServiceFactory.getService(content);
@@ -78,7 +82,7 @@ public class ContentController {
         }
     
     @DeleteMapping("/delete")
-    public  ResponseEntity<Content>  deleteContent(@RequestBody Content content) throws IOException {
+    public  ResponseEntity<Content>  deleteContent(@RequestBody Content content) throws IOException{
         // Logica per determinare il tipo di contenuto basato su contentEnum
 
         ContentService contentService = contentServiceFactory.getService(content);
@@ -95,7 +99,7 @@ public class ContentController {
     }
     
     @PostMapping("/update")
-    public ResponseEntity<Content> updateContent(@RequestBody Content content) throws IOException {
+    public ResponseEntity<Content> updateContent(@RequestBody Content content) throws IOException{
         ContentService contentService = contentServiceFactory.getService(content);
         
         Content c = contentService.update(content);
@@ -107,49 +111,6 @@ public class ContentController {
 			httpStatus = HttpStatus.BAD_REQUEST;
         
         return new ResponseEntity<Content>(c, httpStatus);
-    }
-    
-    
-    private Content handlerContentCostructor(Content content, MultipartFile file) {
-        
-    	String contentType = file.getContentType();
-
-    	
-    	if (contentType != null) {
-            if (contentType.startsWith("image/")) {
-            	
-            	return handlerImageContent(content, file);
-            	
-            } else if (contentType.startsWith("video/")) {
-
-            	return handleVideoContent(content, file);
-            	
-            } else if (contentType.startsWith("text/plain")) {
-  
-            	return handlerTextContent(content, file);
-            }
-        }
-    	return null;
-    	
-    }
-    
-    private Content handlerImageContent(Content content, MultipartFile file) {
-    	File dest = new File(UPLOAD_DIR +"image/"+ file.getOriginalFilename());
-    	//TODO add param type
-    	
-    	return new ImageContent(content, dest.toString());
-    }
-    private Content handleVideoContent(Content content, MultipartFile file) {
-    	File dest = new File(UPLOAD_DIR +"video/"+ file.getOriginalFilename());
-    	//TODO add param type
-    	
-    	return new VideoContent(content, dest.toString());
-    }
-    private Content handlerTextContent(Content content, MultipartFile file) {
-    	File dest = new File(UPLOAD_DIR +"file/"+ file.getOriginalFilename());
-    	//TODO add param type
-    	
-    	return new TextContent(content, dest.toString());
     }
     
 }

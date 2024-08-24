@@ -7,26 +7,53 @@ import jakarta.persistence.Entity;
 @Entity
 public class ImageContent extends Content {
 
-	private String resolution;
+	private int width;
+	private int height;
+	private String format;
+	
+	private static final String UPLOAD_DIR= "./Utils/Content/images/";
 	
 	//Empty
 	public ImageContent() {
 		
 	}
 
-    public ImageContent(User publisher, StateEnum state, String title, String descr, String path, String resolution) {
-        super(publisher, state, title, descr, path);
-        this.resolution = resolution;
+    public ImageContent(User publisher, StateEnum state, String title, String descr, String fileName, int width, int height,String format) {
+        super(publisher, state, title, descr, UPLOAD_DIR + fileName);
+        this.width = width;
+        this.height = height;
+        this.format = format;
     }
     
-	public ImageContent(Content content, String dest) {
-		super(content, dest);
-		//TODO add param type
+	public ImageContent(Content content, String fileName, int width, int height,String format) {
+		super(content, UPLOAD_DIR + fileName);
+		this.width = width;
+        this.height = height;
+        this.format = format;
 	}
-	public String getResolution() {
-		return resolution;
+
+	public int getWidth() {
+		return width;
 	}
-	public void setResolution(String resolution) {
-		this.resolution = resolution;
+
+	public void setWidth(int width) {
+		this.width = width;
 	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	public String getFormat() {
+		return format;
+	}
+
+	public void setFormat(String format) {
+		this.format = format;
+	}
+
 }

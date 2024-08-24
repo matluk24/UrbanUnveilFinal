@@ -72,7 +72,7 @@ public class ContentController {
     	// Estraggo l'handler giusto e creo l'oggetto Content
     	String contentType = content.getPath();
     	ContentHandler handler = contentHandlerFactory.getHandler(contentType);
-    	
+    	//TODO implementare test per upload e usccessivamente implementare upload, in caso modificare repository
     	content = handler.handleContent(content, file);
 
         ContentService<?> contentService = contentServiceFactory.getService(content);

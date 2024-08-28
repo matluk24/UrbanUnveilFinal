@@ -23,12 +23,12 @@ private ContestRepository repo;
 		
 	
 	@Override
-	public Contest save(Contest c) {
+	public Contest add(Contest c) {
 		return repo.save(c);
 	}
 
 	@Override
-	public Contest load(Long id) {
+	public Contest get(Long id) {
 		if(repo.existsById(id)) {
 			return repo.findById(id).get();
 		}

@@ -31,12 +31,12 @@ public class ContestController {
 	
 	@PostMapping("/add")
 	public ResponseEntity<Contest> add(@RequestBody Contest c) {
-		return new ResponseEntity<Contest>(service.save(c), HttpStatus.OK);
+		return new ResponseEntity<Contest>(service.add(c), HttpStatus.OK);
 	}
 	
 	@GetMapping("/get/{id}")
 	public ResponseEntity<Contest> get(@PathVariable("id") Long id) {
-		Contest c = service.load(id);
+		Contest c = service.get(id);
 		if(c==null) {
 			return new ResponseEntity<Contest>(c, HttpStatus.NOT_FOUND);
 		}

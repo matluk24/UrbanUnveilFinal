@@ -28,7 +28,7 @@ public class AuthenticationController {
 		
 	}
 	
-	@GetMapping("/Login")
+	@PostMapping("/Login")
 	public ResponseEntity<User> login(@RequestParam String email, @RequestParam String password){
 		User u = service.checkValues(email, password);
 		HttpStatus httpStatus = HttpStatus.OK;

@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import it.unicam.cs.ids.UrbanUnveil.api.Enum.RoleEnum;
 import it.unicam.cs.ids.UrbanUnveil.api.models.User;
 import it.unicam.cs.ids.UrbanUnveil.api.repo.UserRepository;
 
@@ -31,6 +32,10 @@ public class UserServiceImp implements UserService {
 
 	@Override
 	public User add(User u) {
+		if(u.getRole()==null) {
+			u.setRole(RoleEnum.TOURIST);
+		}
+		System.out.println(u);
 		return userRepo.save(u);
 	}
 

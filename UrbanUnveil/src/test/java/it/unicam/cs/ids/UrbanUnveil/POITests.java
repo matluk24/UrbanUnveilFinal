@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import it.unicam.cs.ids.UrbanUnveil.api.Controller.OSMController;
 import it.unicam.cs.ids.UrbanUnveil.api.Controller.POIController;
 import it.unicam.cs.ids.UrbanUnveil.api.Controller.UserController;
+import it.unicam.cs.ids.UrbanUnveil.api.Enum.RoleEnum;
 import it.unicam.cs.ids.UrbanUnveil.api.models.POI;
 import it.unicam.cs.ids.UrbanUnveil.api.models.User;
 
@@ -28,9 +29,12 @@ public class POITests {
 	public void addPOITest() {
 		
 		POI p=null;
-		User u = new User("Mattia", "Luciani", "mattia@boh.it", "MNBHDGE", "1234");
+		User u = new User("Mattia", "Luciani", "mattia@boh.it", "MNBHDGE", "1234", null);
+		
+		System.out.println(u);
 		
 		userc.add(u);
+		System.out.println(userc.getAll().getBody());
 		
 		try {
 			 p= new POI(osmc.search("New York").getBody(), userc.get(Integer.toUnsignedLong(1)).getBody(), null);
@@ -39,7 +43,7 @@ public class POITests {
 			e.printStackTrace();
 		}
 		
-		System.out.print(p);
+		System.out.print(c.add(p));
 		
 	}
 }

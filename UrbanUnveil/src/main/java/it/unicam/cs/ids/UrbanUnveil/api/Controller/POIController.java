@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +40,10 @@ public class POIController {
 		if(p.getAutore().getRole().equals(RoleEnum.TRUSTEDCONTRIBUTOR)) {
 			p.setStato(StateEnum.APPROVED);
 		}
+		else if(!p.getAutore().getRole().equals(RoleEnum.TRUSTEDCONTRIBUTOR) || !p.getAutore().getRole().equals(RoleEnum.CONTRIBUTOR)) {
+			p=null;
+			return new ResponseEntity<POI>(p, HttpStatus.FORBIDDEN);
+		}
 		else {
 			p.setStato(StateEnum.WAITING);
 		}
@@ -59,8 +64,8 @@ public class POIController {
 			return new ResponseEntity<List<POI>>(service.getAll(), HttpStatus.OK);
 	}
 	
-	@GetMapping("/{id}")
-	public ResponseEntity<POI> getByID(@RequestBody Long id) {
+	@GetMapping("/get/{id}")
+	public ResponseEntity<POI> getByID(@PathVariable("id") Long id) {
 			return new ResponseEntity<POI>(service.getById(id), HttpStatus.OK);
 	}
 	

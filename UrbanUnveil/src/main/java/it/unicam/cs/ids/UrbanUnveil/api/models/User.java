@@ -18,16 +18,22 @@ public class User {
 	    private String email;
 		private String CF;
 		private String password;
-		@Embedded
-	    @JoinColumn(name = "role")
+		@Column(name = "role", nullable = false)
 	    private RoleEnum role;
 		
-		public User (String name, String surname, String email, String CF, String password) {
+		public User (String name, String surname, String email, String CF, String password, RoleEnum role) {
 			this.name = name;
 			this.surname = surname;
 			this.email = email;
+			if(role==null) {
+				this.role=RoleEnum.TOURIST;
+			}
+			else {
+				this.role=role;
+			}
 			this.CF = CF;
 			this.password = password;
+
 		}
 		@Autowired
 	    public User() {

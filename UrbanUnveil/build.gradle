@@ -22,8 +22,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.json:json:20211205'
-	implementation 'org.apache.tika:tika-core:2.9.2' // Versione corrente può variare
-	implementation 'org.apache.tika:tika-parsers-standard-package:2.9.2' // Include i parser per video
+	implementation group: 'org.apache.tika', name: 'tika-core', version: '2.9.2' // Versione corrente può variare
+	implementation group: 'org.apache.tika', name: 'tika-parsers-standard-package', version: '2.9.2' // Include i parser per video
 	
 	
 	runtimeOnly 'com.h2database:h2'

@@ -12,6 +12,10 @@ public class OSMNode {
 	private double lat;
 	private double lon;
 	
+	public OSMNode() {
+		
+	}
+	
 	public OSMNode(Long place_id, String nome, double lat, double lon) {
 		this.place_id=place_id;
 		this.nome=nome;

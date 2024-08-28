@@ -7,8 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.unicam.cs.ids.UrbanUnveil.api.models.Itinerario;
@@ -16,7 +18,8 @@ import it.unicam.cs.ids.UrbanUnveil.api.models.POI;
 import it.unicam.cs.ids.UrbanUnveil.api.models.User;
 import it.unicam.cs.ids.UrbanUnveil.api.services.ItinerarioService;
 
-@RestController("/itinerario")
+@RestController
+@RequestMapping("/itinerario")
 public class ItinerarioController {
 
 	
@@ -56,8 +59,8 @@ public class ItinerarioController {
 		}
 	}
 	
-	@GetMapping("/get")
-	public ResponseEntity<Itinerario> get(@RequestBody Long id) {
+	@GetMapping("/get/{id}")
+	public ResponseEntity<Itinerario> get(@PathVariable("id") Long id) {
 		Itinerario i;
 		if(service.get(id)!=null) {
 			i=service.get(id);

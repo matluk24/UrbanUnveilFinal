@@ -28,7 +28,7 @@ public class AuthenticationController {
 		
 	}
 	
-	@GetMapping("/Login")
+	@PostMapping("/Login")
 	public ResponseEntity<User> login(@RequestParam String email, @RequestParam String password){
 		User u = service.checkValues(email, password);
 		HttpStatus httpStatus = HttpStatus.OK;
@@ -38,7 +38,7 @@ public class AuthenticationController {
 		return new ResponseEntity<User>(u, httpStatus);
 	}
 	
-	@PostMapping("/Sighin")
+	@PostMapping("/Signin")
 	public ResponseEntity<User> sighin(@RequestBody User user){
 		//TODO fare la registrazione
 		return null;

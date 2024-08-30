@@ -1,29 +1,56 @@
 package it.unicam.cs.ids.UrbanUnveil.api.models;
 
-import org.springframework.web.multipart.MultipartFile;
-
-import it.unicam.cs.ids.UrbanUnveil.api.Enum.ContentEnum;
 import it.unicam.cs.ids.UrbanUnveil.api.Enum.StateEnum;
 import jakarta.persistence.Entity;
 
+
 @Entity
 public class TextContent extends Content {
-    private String language;
-    private MultipartFile file;
-    
+	
+	private Long lineCount;
+	private Long wordCount;
+	private Long size;
+	private static final String UPLOAD_DIR= "./Utils/Content/text/plain";
+	
     //Empty
     public TextContent() {
-    	super();
-    	language = null;
-        file= null;
+
     }
 
-    public TextContent(User publisher, StateEnum state, ContentEnum contentRef, String title, String descr, String path, String language, MultipartFile file) {
-        super(publisher, state, contentRef, title, descr, path);
-        this.language = language;
-        this.file = file;
+    public TextContent(User publisher, StateEnum state, String title, String descr, String fileName, Long size, Long lineCount, Long wordCount) {
+        super(publisher, state, title, descr, UPLOAD_DIR + fileName);
+        this.size = size;
+        this.lineCount = lineCount;
+        this.wordCount = wordCount;
     }
-    public MultipartFile getFile() {
-    	return file;
+    public TextContent(Content content, String fileName, Long size, Long lineCount, Long wordCount) {
+    	super(content, UPLOAD_DIR + fileName);
+    	this.size = size;
+        this.lineCount = lineCount;
+        this.wordCount = wordCount;
     }
+
+	public Long getLineCount() {
+		return lineCount;
+	}
+	
+	public Long getWordCount() {
+		return wordCount;
+	}
+	public void setLineCount(Long lineCount) {
+		this.lineCount = lineCount;
+	}
+	public void setWordCount(Long wordCount) {
+		this.wordCount = wordCount;
+	}
+
+	public Long getSize() {
+		return size;
+	}
+
+	public void setSize(Long size) {
+		this.size = size;
+	}
+
+
 }

@@ -17,6 +17,10 @@ public class AuthenticationService implements Authentication {
 		
 	}
 	
+	public AuthenticationService() {
+		
+	}
+	
 	@Override
 	public User checkValues (String email, String password) {
 		User user = userRepo.findByEmail(email);

@@ -3,14 +3,13 @@ package it.unicam.cs.ids.UrbanUnveil.api.services;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import it.unicam.cs.ids.UrbanUnveil.api.models.Content;
 import it.unicam.cs.ids.UrbanUnveil.api.models.ImageContent;
-import it.unicam.cs.ids.UrbanUnveil.api.models.TextContent;
 import it.unicam.cs.ids.UrbanUnveil.api.repo.ContentRepository;
 
+@Service
 public class ImageContentService implements ContentService<ImageContent> {
 	
 	private ContentRepository repo;
@@ -26,6 +25,7 @@ public class ImageContentService implements ContentService<ImageContent> {
 
 	@Override
 	public Content save(ImageContent content) throws IOException{
+		
 		if(content.equals(repo.save(content))){
 			 return content;
 		 }

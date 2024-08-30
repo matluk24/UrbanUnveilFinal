@@ -7,23 +7,27 @@ import jakarta.persistence.Embeddable;
 @Embeddable
 public class OSMNode {
 
-	private Long id;
+	private Long place_id;
 	private String nome;
 	private double lat;
 	private double lon;
 	
-	public OSMNode(Long id, String nome, double lat, double lon) {
-		this.id=id;
+	public OSMNode() {
+		
+	}
+	
+	public OSMNode(Long place_id, String nome, double lat, double lon) {
+		this.place_id=place_id;
 		this.nome=nome;
 		this.lat=lat;
 		this.lon=lon;
 	}
 	
-	public Long getId() {
-		return id;
+	public Long getPlaceId() {
+		return place_id;
 	}
-	public void setId(Long id) {
-		this.id = id;
+	public void setPlaceId(Long place_id) {
+		this.place_id = place_id;
 	}
 	public String getNome() {
 		return nome;
@@ -45,7 +49,7 @@ public class OSMNode {
 	}
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, lat, lon, nome);
+		return Objects.hash(place_id, lat, lon, nome);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -56,13 +60,13 @@ public class OSMNode {
 		if (getClass() != obj.getClass())
 			return false;
 		OSMNode other = (OSMNode) obj;
-		return Objects.equals(id, other.id) && Double.doubleToLongBits(lat) == Double.doubleToLongBits(other.lat)
+		return Objects.equals(place_id, other.place_id) && Double.doubleToLongBits(lat) == Double.doubleToLongBits(other.lat)
 				&& Double.doubleToLongBits(lon) == Double.doubleToLongBits(other.lon)
 				&& Objects.equals(nome, other.nome);
 	}
 	@Override
 	public String toString() {
-		return "OSMNode [id=" + id + ", nome=" + nome + ", lat=" + lat + ", lon=" + lon + "]";
+		return "OSMNode [place_id=" + place_id + ", nome=" + nome + ", lat=" + lat + ", lon=" + lon + "]";
 	}
 	
 	

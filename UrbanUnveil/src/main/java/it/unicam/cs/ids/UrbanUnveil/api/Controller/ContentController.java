@@ -55,27 +55,28 @@ public class ContentController {
         	content = handler.handleContent(content, file);
             
             //estraggo il Service giusto e salvo il file nella cartella di destinazione
-            ContentService<?> contentService = contentServiceFactory.getService(content);
+            ContentService contentService = contentServiceFactory.getService(content);
             file.transferTo(new File(content.getPath()));
             
             
-            Content c = contentService.save(content);
+            Content savedContent = contentService.save(content);
             HttpStatus httpStatus = HttpStatus.CONFLICT;
-            if(c.equals(content)) {
+            if(savedContent.equals(content)) {
             	httpStatus = HttpStatus.OK;
             }
-            return new ResponseEntity<Content>(c, httpStatus);
+            return new ResponseEntity<Content>(savedContent, httpStatus);
         }
-       
+    /*
     @GetMapping("/load")
     public ResponseEntity<Content> loadContent(@RequestBody Content content) throws IOException{
     	// Estraggo l'handler giusto e creo l'oggetto Content
     	String contentType = content.getPath();
     	ContentHandler handler = contentHandlerFactory.getHandler(contentType);
+    	
     	//TODO implementare test per upload e usccessivamente implementare upload, in caso modificare repository
     	content = handler.handleContent(content, file);
 
-        ContentService<?> contentService = contentServiceFactory.getService(content);
+        ContentService contentService = contentServiceFactory.getService(content);
         
         // TODO prendere il content giusto
         HttpStatus httpStatus = HttpStatus.NOT_FOUND;
@@ -84,12 +85,12 @@ public class ContentController {
         return new ResponseEntity<Content>(content, httpStatus);
         	
         }
-    
+    */
     @DeleteMapping("/delete")
     public  ResponseEntity<Content>  deleteContent(@RequestBody Content content) throws IOException{
         // Logica per determinare il tipo di contenuto basato su contentEnum
 
-        ContentService<?> contentService = contentServiceFactory.getService(content);
+        ContentService contentService = contentServiceFactory.getService(content);
         
         Content c = contentService.delete(content.getId());
         HttpStatus httpStatus = HttpStatus.NOT_FOUND;
@@ -104,7 +105,7 @@ public class ContentController {
     
     @PostMapping("/update")
     public ResponseEntity<Content> updateContent(@RequestBody Content content) throws IOException{
-        ContentService<?> contentService = contentServiceFactory.getService(content);
+        ContentService contentService = contentServiceFactory.getService(content);
         
         Content c = contentService.update(content);
         HttpStatus httpStatus = HttpStatus.CONFLICT;

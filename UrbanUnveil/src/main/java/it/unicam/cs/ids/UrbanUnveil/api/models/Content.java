@@ -2,8 +2,6 @@ package it.unicam.cs.ids.UrbanUnveil.api.models;
 
 import jakarta.persistence.*;
 
-import java.io.File;
-
 import it.unicam.cs.ids.UrbanUnveil.api.Enum.StateEnum;
 
 @Entity

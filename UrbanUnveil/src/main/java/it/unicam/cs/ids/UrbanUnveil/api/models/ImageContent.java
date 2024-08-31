@@ -5,7 +5,7 @@ import it.unicam.cs.ids.UrbanUnveil.api.Enum.StateEnum;
 import jakarta.persistence.Entity;
 
 @Entity
-public class ImageContent extends Content {
+public class ImageContent extends Content{
 
 	private int width;
 	private int height;

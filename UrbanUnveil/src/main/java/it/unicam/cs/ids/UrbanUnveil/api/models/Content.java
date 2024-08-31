@@ -73,7 +73,7 @@ public abstract class Content {
 	
 	@Override
 	public String toString() {
-		return "Content [Id=" + Id + ", descr=" + descr + "]";
+		return "Content {Id=" + Id + ", descr=" + descr + ",publisher = "+publisher+ ", path = "+path+"}";
 	}
 	
 	//TODO IS Null method

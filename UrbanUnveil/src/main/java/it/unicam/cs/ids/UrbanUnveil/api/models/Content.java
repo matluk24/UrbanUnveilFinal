@@ -2,8 +2,6 @@ package it.unicam.cs.ids.UrbanUnveil.api.models;
 
 import jakarta.persistence.*;
 
-import java.io.File;
-
 import it.unicam.cs.ids.UrbanUnveil.api.Enum.StateEnum;
 
 @Entity
@@ -75,7 +73,7 @@ public abstract class Content {
 	
 	@Override
 	public String toString() {
-		return "Content [Id=" + Id + ", descr=" + descr + "]";
+		return "Content {Id=" + Id + ", descr=" + descr + ",publisher = "+publisher+ ", path = "+path+"}";
 	}
 	
 	//TODO IS Null method

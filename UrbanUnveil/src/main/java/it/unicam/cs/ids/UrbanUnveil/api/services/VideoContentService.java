@@ -3,22 +3,21 @@ package it.unicam.cs.ids.UrbanUnveil.api.services;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import it.unicam.cs.ids.UrbanUnveil.api.models.Content;
 import it.unicam.cs.ids.UrbanUnveil.api.models.VideoContent;
-import it.unicam.cs.ids.UrbanUnveil.api.repo.ContentRepository;
+import it.unicam.cs.ids.UrbanUnveil.api.repo.VideoContentRepository;
 
 @Service
-public class VideoContentService implements ContentService<VideoContent> {
+@Qualifier("videoContentService")
+public class VideoContentService implements ContentService {
 
-	
-	private ContentRepository repo;
-	
+
 	@Autowired
-	public VideoContentService(ContentRepository r) {
-			repo=r;
-	}
+	private VideoContentRepository repo;
+	
 	
 	public VideoContentService() {
 		
@@ -26,10 +25,13 @@ public class VideoContentService implements ContentService<VideoContent> {
 	
 	
 	@Override
-	public Content save(VideoContent content) throws IOException{
-		if(content.equals(repo.save(content))){
-			 return content;
-		 }
+	public Content save(Content content) throws IOException{
+		if(content instanceof VideoContent) {
+			VideoContent videoContent = (VideoContent) content;
+			if(videoContent.equals(repo.save(videoContent))){
+				return videoContent;
+			}
+		}
 		 return new VideoContent();
 	}
 
@@ -52,10 +54,13 @@ public class VideoContentService implements ContentService<VideoContent> {
 	}
 	
 	@Override
-	public Content update(VideoContent c) throws IOException {
-		if(c.equals(repo.saveAndFlush(c))){
-			 return c;
-		 }
+	public Content update(Content content) throws IOException {
+		if(content instanceof VideoContent) {
+			VideoContent videoContent = (VideoContent) content;
+			if(videoContent.equals(repo.saveAndFlush(videoContent))){
+				return videoContent;
+			}
+		}
 		 return new VideoContent();
 		
 	}

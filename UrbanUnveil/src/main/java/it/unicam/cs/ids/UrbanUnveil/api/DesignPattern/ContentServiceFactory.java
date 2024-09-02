@@ -29,7 +29,7 @@ public class ContentServiceFactory {
 		
 	}
 
-    public ContentService<?> getService(Content content) {
+    public ContentService getService(Content content) {
     	
         if (content instanceof ImageContent) {
             return imageContentService;

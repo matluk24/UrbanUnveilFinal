@@ -9,9 +9,10 @@ import java.util.Map;
 @Component
 public class ContentHandlerFactory {
 
+	@Autowired
     private final Map<String, ContentHandler> handlers;
 
-    @Autowired
+  
     public ContentHandlerFactory(Map<String, ContentHandler> handlers) {
         this.handlers = handlers;
     }

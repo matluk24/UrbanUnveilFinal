@@ -32,8 +32,7 @@ public class AuthenticationService implements Authentication {
 
 	@Override
 	public User registrazione(User u) {
-		// TODO Auto-generated method stub
-		return null;
+		return userRepo.save(u);
 	}
 
 }

@@ -1,10 +1,16 @@
 package it.unicam.cs.ids.UrbanUnveil;
 
+import static org.mockito.Mockito.CALLS_REAL_METHODS;
+
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 
 import it.unicam.cs.ids.UrbanUnveil.api.Controller.OSMController;
 import it.unicam.cs.ids.UrbanUnveil.api.Controller.POIController;
@@ -29,21 +35,49 @@ public class POITests {
 	public void addPOITest() {
 		
 		POI p=null;
-		User u = new User("Mattia", "Luciani", "mattia@boh.it", "MNBHDGE", "1234", null);
-		
-		System.out.println(u);
-		
-		userc.add(u);
-		System.out.println(userc.getAll().getBody());
-		
 		try {
 			 p= new POI(osmc.search("New York").getBody(), userc.get(Integer.toUnsignedLong(1)).getBody(), null);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		p= c.add(p).getBody();
+		POI pt = c.getByID(Integer.toUnsignedLong(3)).getBody();
 		
-		System.out.print(c.add(p));
+		Assertions.assertEquals(p, pt);
+		
+	}
+	
+	@Test
+	public void getAllTestAndRemove() {
+		List<POI> l = new LinkedList<POI>();
+	
+		User u = new User("Mattia", "Luciani", "mattia@boh.it", "MNBHDGE", "1234", RoleEnum.CONTRIBUTOR);
+		
+		userc.add(u);
+		
+		System.out.println(userc.getAll());		
+		POI p=null;
+		try {
+			 p= new POI(osmc.search("Osimo").getBody(), userc.get(Integer.toUnsignedLong(1)).getBody(), null);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		c.add(p);
+		l.add(p);
+		try {
+			 p= new POI(osmc.search("Castelfidardo").getBody(), userc.get(Integer.toUnsignedLong(1)).getBody(), null);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		c.add(p);
+		l.add(p);
+		
+		Assertions.assertEquals(l, c.getAll().getBody());
+		Assertions.assertEquals(c.remove(Integer.toUnsignedLong(1)).getStatusCode(), HttpStatus.OK);
+		c.remove(Integer.toUnsignedLong(2));
 		
 	}
 }

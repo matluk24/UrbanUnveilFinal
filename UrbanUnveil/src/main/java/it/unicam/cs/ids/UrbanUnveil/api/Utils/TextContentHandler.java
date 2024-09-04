@@ -1,5 +1,6 @@
 package it.unicam.cs.ids.UrbanUnveil.api.Utils;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.springframework.web.multipart.MultipartFile;

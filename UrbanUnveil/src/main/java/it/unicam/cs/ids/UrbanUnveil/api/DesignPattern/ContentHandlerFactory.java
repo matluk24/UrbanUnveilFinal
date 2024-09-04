@@ -9,19 +9,20 @@ import java.util.Map;
 @Component
 public class ContentHandlerFactory {
 
+	@Autowired
     private final Map<String, ContentHandler> handlers;
 
-    @Autowired
+  
     public ContentHandlerFactory(Map<String, ContentHandler> handlers) {
         this.handlers = handlers;
     }
 
     public ContentHandler getHandler(String contentType) {
-        if (contentType.startsWith("image/")) {
+        if (contentType.endsWith("image")) {
             return handlers.get("imageContentHandler");
-        } else if (contentType.startsWith("video/")) {
+        } else if (contentType.endsWith("video")) {
             return handlers.get("videoContentHandler");
-        } else if (contentType.startsWith("text/plain")) {
+        } else if (contentType.endsWith("plain")) {
             return handlers.get("textContentHandler");
         }
         throw new IllegalArgumentException("Unsupported content type: " + contentType);

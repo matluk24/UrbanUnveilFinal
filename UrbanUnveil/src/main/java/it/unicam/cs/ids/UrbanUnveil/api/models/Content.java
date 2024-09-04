@@ -2,12 +2,12 @@ package it.unicam.cs.ids.UrbanUnveil.api.models;
 
 import jakarta.persistence.*;
 
-import java.io.File;
+import java.util.Objects;
 
 import it.unicam.cs.ids.UrbanUnveil.api.Enum.StateEnum;
 
 @Entity
-public abstract class Content {
+public class Content {
 	
 	
 	@Id
@@ -24,9 +24,14 @@ public abstract class Content {
 		
 	}
 	
-	public Content (User pub, StateEnum state, String title, String descr, String path) {
+	public Content (User pub, StateEnum s, String title, String descr, String path) {
 		this.publisher = pub;
-		this.state = state;
+		if(s==null) {
+			state=StateEnum.WAITING;
+		}
+		else {
+			state=s;
+		}
 		this.title = title;
 		this.descr = descr;
 		this.path = path;
@@ -74,10 +79,28 @@ public abstract class Content {
 	}
 	
 	@Override
+	public int hashCode() {
+		return Objects.hash(Id, descr, path, publisher, state, title);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Content other = (Content) obj;
+		return Id.equals(other.Id) && descr.equals(other.descr) && path.equals(other.path)
+				&& publisher.equals(other.publisher) && state == other.state
+				&& title.equals(other.title);
+	}
+
+	@Override
 	public String toString() {
-		return "Content [Id=" + Id + ", descr=" + descr + "]";
+		return "Content {Id=" + Id + ", descr=" + descr + ",publisher = "+publisher+ ", path = "+path+"}";
 	}
 	
-	//TODO IS Null method
 
 }

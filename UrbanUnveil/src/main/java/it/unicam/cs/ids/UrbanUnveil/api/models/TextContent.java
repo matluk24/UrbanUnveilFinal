@@ -1,5 +1,7 @@
 package it.unicam.cs.ids.UrbanUnveil.api.models;
 
+import java.util.Objects;
+
 import it.unicam.cs.ids.UrbanUnveil.api.Enum.StateEnum;
 import jakarta.persistence.Entity;
 
@@ -10,7 +12,7 @@ public class TextContent extends Content {
 	private Long lineCount;
 	private Long wordCount;
 	private Long size;
-	private static final String UPLOAD_DIR= "./Utils/Content/text/plain";
+	private static final String UPLOAD_DIR= System.getProperty("user.dir")+"/Utils/Content/text/plain";
 	
     //Empty
     public TextContent() {
@@ -52,5 +54,33 @@ public class TextContent extends Content {
 		this.size = size;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + Objects.hash(lineCount, size, wordCount);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		TextContent other = (TextContent) obj;
+		return Objects.equals(lineCount, other.lineCount) && Objects.equals(size, other.size)
+				&& Objects.equals(wordCount, other.wordCount);
+	}
+
+	@Override
+	public String toString() {
+		return "TextContent [lineCount=" + lineCount + ", wordCount=" + wordCount + ", size=" + size +", toString()="
+				+ super.toString() + ", getClass()=" + getClass() + "]";
+	}
+
+	
 
 }

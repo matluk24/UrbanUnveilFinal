@@ -35,14 +35,16 @@ public class UserServiceImp implements UserService {
 		if(u.getRole()==null) {
 			u.setRole(RoleEnum.TOURIST);
 		}
-		System.out.println(u);
 		return userRepo.save(u);
 	}
 
 	@Override
 	public boolean remove(User u) {
-		userRepo.delete(u);
-		return userRepo.existsById(u.getId());
+		if(userRepo.existsById(u.getId())) {
+			userRepo.deleteById(u.getId());
+			return true;
+		}
+		return false;
 	}
 	
 	@Override

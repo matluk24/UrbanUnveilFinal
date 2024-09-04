@@ -6,40 +6,35 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import it.unicam.cs.ids.UrbanUnveil.api.models.Content;
 import it.unicam.cs.ids.UrbanUnveil.api.models.TextContent;
-import it.unicam.cs.ids.UrbanUnveil.api.repo.ContentRepository;
+import it.unicam.cs.ids.UrbanUnveil.api.repo.TextContentRepository;
 
 @Service
-public class TextContentService implements ContentService<TextContent> {
+@Qualifier("textContentService")
+public class TextContentService implements ContentService {
 
-	
-	private ContentRepository repo;
-	private static final String UPLOAD_DIR="/src/main/resources/text";
-	
 	@Autowired
-	public TextContentService(ContentRepository r) {
-			repo=r;
-	}
+	private TextContentRepository repo;
 	
-
 	public TextContentService() {
 		
 	}
 	
-	/*@Override
-	public Content save(TextContent content) throws IOException {
-		MultipartFile file = content.getFile();
-		if (file.isEmpty()) {
-			return null;
+	@Override
+	public Content save(Content content) throws IOException {
+		
+		if(content instanceof TextContent) {
+			TextContent textContent = (TextContent) content;
+			if(textContent.equals(repo.save(textContent))){
+				return textContent;
+			}
 		}
-		 if(content.equals(repo.save(content))){
-			 return content;
-		 }
 		 return new TextContent();
-	}*/
+	}
 
 	@Override
 	public Content load(Long id) throws IOException {
@@ -59,18 +54,17 @@ public class TextContentService implements ContentService<TextContent> {
 
 	}
 	
-	/*@Override
-	public Content update(TextContent c) throws IOException {
-		MultipartFile file = c.getFile();
-		if (file.isEmpty()) {
-			return null;
+	@Override
+	public Content update(Content content) throws IOException {
+		if(content instanceof TextContent) {
+			TextContent textContent = (TextContent) content;
+			if(textContent.equals(repo.saveAndFlush(textContent))){
+				return textContent;
+			}
 		}
-		 if(c.equals(repo.saveAndFlush(c))){
-			 return c;
-		 }
 		 return new TextContent();
 		
-	}*/
+	}
 	
 	public String getTextFromFile(Long i) throws IOException {
 		
@@ -95,7 +89,7 @@ public class TextContentService implements ContentService<TextContent> {
 		TextContent c = (TextContent) this.load(i);
 		String file="";
 		
-		File f = new File(UPLOAD_DIR, c.getTitle()+".txt");
+		File f = new File(c.getPath());
 		f.setWritable(true);
 		f.setReadable(true);
 		c.setPath(f.getCanonicalPath());
@@ -115,18 +109,6 @@ public class TextContentService implements ContentService<TextContent> {
 		file = file+" "+userInput;
 		
 		return file;
-	}
-	
-	@Override
-	public Content save(TextContent content) throws IOException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Content update(TextContent c) throws IOException {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

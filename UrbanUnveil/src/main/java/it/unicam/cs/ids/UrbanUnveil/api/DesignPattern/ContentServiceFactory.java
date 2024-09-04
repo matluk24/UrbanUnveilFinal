@@ -29,7 +29,7 @@ public class ContentServiceFactory {
 		
 	}
 
-    public ContentService<?> getService(Content content) {
+    public ContentService getService(Content content) {
     	
         if (content instanceof ImageContent) {
             return imageContentService;
@@ -39,6 +39,18 @@ public class ContentServiceFactory {
             return textContentService;
         } else {
             throw new IllegalArgumentException("Unsupported content type");
+        }
+    }
+    
+    public ContentService getService(String fileType) {
+    	if (fileType.equals("Image")) {
+            return imageContentService;
+        } else if (fileType.equals("Video")) {
+            return videoContentService;
+        } else if (fileType.equals("Text")) {
+            return textContentService;
+        } else {
+            throw new IllegalArgumentException("Unsupported file type");
         }
     }
 }

@@ -3,32 +3,33 @@ package it.unicam.cs.ids.UrbanUnveil.api.services;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import it.unicam.cs.ids.UrbanUnveil.api.models.Content;
 import it.unicam.cs.ids.UrbanUnveil.api.models.ImageContent;
-import it.unicam.cs.ids.UrbanUnveil.api.repo.ContentRepository;
+import it.unicam.cs.ids.UrbanUnveil.api.repo.ImageContentRepository;
 
 @Service
-public class ImageContentService implements ContentService<ImageContent> {
-	
-	private ContentRepository repo;
+@Qualifier("imageContentService")
+public class ImageContentService implements ContentService {
 	
 	@Autowired
-	public ImageContentService(ContentRepository r) {
-			repo=r;
-	}
+	private ImageContentRepository repo;
+	
 	
 	public ImageContentService() {
 		
 	}
 
 	@Override
-	public Content save(ImageContent content) throws IOException{
-		
-		if(content.equals(repo.save(content))){
-			 return content;
-		 }
+	public Content save(Content content) throws IOException{
+		if(content instanceof ImageContent) {
+			ImageContent imageContent = (ImageContent) content;
+			if(imageContent.equals(repo.save(imageContent))){
+				return imageContent;
+			}
+		}
 		 return new ImageContent();
 	}	 
 	
@@ -51,10 +52,13 @@ public class ImageContentService implements ContentService<ImageContent> {
 	}
 	
 	@Override
-	public Content update(ImageContent c) throws IOException {
-		 if(c.equals(repo.saveAndFlush(c))){
-			 return c;
-		 }
+	public Content update(Content content) throws IOException {
+		if(content instanceof ImageContent) {
+			ImageContent imageContent = (ImageContent) content;
+			if(imageContent.equals(repo.saveAndFlush(imageContent))){
+				return imageContent;
+			}
+		}
 		 return new ImageContent();
 		
 	}

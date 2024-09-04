@@ -11,7 +11,7 @@ public class ImageContent extends Content{
 	private int height;
 	private String format;
 	
-	private static final String UPLOAD_DIR= "./Utils/Content/image/";
+	private static final String UPLOAD_DIR= System.getProperty("user.dir")+"/Utils/Content/image/";
 	
 	//Empty
 	public ImageContent() {

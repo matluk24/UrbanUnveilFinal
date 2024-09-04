@@ -5,14 +5,17 @@ import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 
 import it.unicam.cs.ids.UrbanUnveil.api.DesignPattern.ContentHandlerFactory;
 import it.unicam.cs.ids.UrbanUnveil.api.DesignPattern.ContentServiceFactory;
@@ -41,8 +44,8 @@ public class ContentController {
     
 
 
-    @PostMapping("/uploadContent")
-    public ResponseEntity<Content> ContentUpload(@RequestBody Content content, MultipartFile file) throws IOException{
+    @PostMapping(path = "/uploadContent", consumes = { MediaType.APPLICATION_JSON_VALUE,MediaType.MULTIPART_FORM_DATA_VALUE })
+    public ResponseEntity<Content> ContentUpload(@RequestPart("content") Content content, @RequestPart("file") MultipartFile file) throws IOException{
         if (file.isEmpty()) {
             return new ResponseEntity<Content>(content, HttpStatus.BAD_REQUEST);
         }

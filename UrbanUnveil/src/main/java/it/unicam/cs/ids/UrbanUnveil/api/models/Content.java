@@ -7,7 +7,7 @@ import java.util.Objects;
 import it.unicam.cs.ids.UrbanUnveil.api.Enum.StateEnum;
 
 @Entity
-public abstract class Content {
+public class Content {
 	
 	
 	@Id
@@ -24,9 +24,14 @@ public abstract class Content {
 		
 	}
 	
-	public Content (User pub, StateEnum state, String title, String descr, String path) {
+	public Content (User pub, StateEnum s, String title, String descr, String path) {
 		this.publisher = pub;
-		this.state = state;
+		if(s==null) {
+			state=StateEnum.WAITING;
+		}
+		else {
+			state=s;
+		}
 		this.title = title;
 		this.descr = descr;
 		this.path = path;

@@ -2,6 +2,8 @@ package it.unicam.cs.ids.UrbanUnveil.api.models;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 import it.unicam.cs.ids.UrbanUnveil.api.Enum.StateEnum;
 
 @Entity
@@ -72,10 +74,28 @@ public abstract class Content {
 	}
 	
 	@Override
+	public int hashCode() {
+		return Objects.hash(Id, descr, path, publisher, state, title);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Content other = (Content) obj;
+		return Id.equals(other.Id) && descr.equals(other.descr) && path.equals(other.path)
+				&& publisher.equals(other.publisher) && state == other.state
+				&& title.equals(other.title);
+	}
+
+	@Override
 	public String toString() {
 		return "Content {Id=" + Id + ", descr=" + descr + ",publisher = "+publisher+ ", path = "+path+"}";
 	}
 	
-	//TODO IS Null method
 
 }

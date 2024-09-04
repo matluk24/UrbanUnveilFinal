@@ -9,6 +9,7 @@ import java.util.List;
 
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -25,12 +26,15 @@ public class POI {
 	private Long id;
 	@Embedded
 	private OSMNode posizione;
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	private List<Content> contenuti;
-	@OneToOne
+	@ManyToOne
 	private User autore;
 	private StateEnum stato;
 	
+	public POI() {
+		
+	}
 	public POI (OSMNode n, User u, StateEnum s) {
 		posizione=n;
 		contenuti = new LinkedList<Content>();
@@ -83,6 +87,7 @@ public class POI {
 
 	@Override
 	public boolean equals(Object obj) {
+		boolean c= false;
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -90,8 +95,14 @@ public class POI {
 		if (getClass() != obj.getClass())
 			return false;
 		POI other = (POI) obj;
-		return Objects.equals(autore, other.autore) && Objects.equals(contenuti, other.contenuti)
-				&& Objects.equals(id, other.id) && Objects.equals(posizione, other.posizione) && stato == other.stato;
+		if(contenuti.isEmpty() && other.contenuti.isEmpty()) {
+			c=true;
+		}
+		else if (!contenuti.equals(other.contenuti)) {
+			c=false;
+		}
+		return autore.equals(other.autore) && c
+				&& id==other.id && posizione.equals(other.posizione) && stato == other.stato;
 	}
 
 	@Override

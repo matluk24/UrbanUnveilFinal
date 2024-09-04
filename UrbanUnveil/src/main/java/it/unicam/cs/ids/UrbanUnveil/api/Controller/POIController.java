@@ -40,7 +40,7 @@ public class POIController {
 		if(p.getAutore().getRole().equals(RoleEnum.TRUSTEDCONTRIBUTOR)) {
 			p.setStato(StateEnum.APPROVED);
 		}
-		else if(!p.getAutore().getRole().equals(RoleEnum.TRUSTEDCONTRIBUTOR) || !p.getAutore().getRole().equals(RoleEnum.CONTRIBUTOR)) {
+		else if(!p.getAutore().getRole().equals(RoleEnum.CONTRIBUTOR)) {
 			p=null;
 			return new ResponseEntity<POI>(p, HttpStatus.FORBIDDEN);
 		}

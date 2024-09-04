@@ -10,8 +10,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.json.JsonMapper;
 
 import it.unicam.cs.ids.UrbanUnveil.api.models.Content;
 import it.unicam.cs.ids.UrbanUnveil.api.models.User;
@@ -26,6 +24,9 @@ public class ContentControllerTest {
 
 	@Autowired
 	private UserController userC;
+	
+	@Autowired
+	private ContentController contentC;
 	
     @Autowired
     private MockMvc mockMvc;
@@ -58,5 +59,8 @@ public class ContentControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.title").value("Test Title"))
                 .andExpect(jsonPath("$.descr").value("Test Description"));
+        
+       System.out.println(contentC.loadContent(Integer.toUnsignedLong(1), "Text"));
     }
+
 }

@@ -10,8 +10,6 @@ import it.unicam.cs.ids.UrbanUnveil.api.models.VideoContent;
 import org.apache.tika.Tika;
 import org.apache.tika.metadata.Metadata;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 
 @Component

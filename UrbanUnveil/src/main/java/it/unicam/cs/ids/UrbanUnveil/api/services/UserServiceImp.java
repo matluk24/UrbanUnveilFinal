@@ -35,7 +35,6 @@ public class UserServiceImp implements UserService {
 		if(u.getRole()==null) {
 			u.setRole(RoleEnum.TOURIST);
 		}
-		System.out.println(u);
 		return userRepo.save(u);
 	}
 

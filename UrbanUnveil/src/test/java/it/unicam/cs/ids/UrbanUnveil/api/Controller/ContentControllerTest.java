@@ -1,6 +1,9 @@
 package it.unicam.cs.ids.UrbanUnveil.api.Controller;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,13 +16,18 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 
 import it.unicam.cs.ids.UrbanUnveil.api.models.Content;
 import it.unicam.cs.ids.UrbanUnveil.api.models.User;
+import it.unicam.cs.ids.UrbanUnveil.api.services.TextContentService;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.io.IOException;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@TestMethodOrder(OrderAnnotation.class)
 public class ContentControllerTest {
 
 	@Autowired
@@ -30,8 +38,12 @@ public class ContentControllerTest {
 	
     @Autowired
     private MockMvc mockMvc;
+    
+    @Autowired
+    private TextContentService textSer;
 
     @Test
+    @Order(value = 1)
     public void testContentUpload() throws Exception {
         // Creare un file di esempio
         MockMultipartFile file = new MockMultipartFile(
@@ -63,4 +75,17 @@ public class ContentControllerTest {
        System.out.println(contentC.loadContent(Integer.toUnsignedLong(1), "Text"));
     }
 
+    @Test
+    @Order(value = 2)
+    public void testWriteArticle() {
+    	
+    	try {
+			textSer.writeArticle(Integer.toUnsignedLong(1), "Ciaoooo");
+			System.out.println(textSer.getTextFromFile(Integer.toUnsignedLong(1)));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    }
 }

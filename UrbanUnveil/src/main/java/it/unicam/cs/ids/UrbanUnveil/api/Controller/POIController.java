@@ -69,7 +69,7 @@ public class POIController {
 			return new ResponseEntity<POI>(service.getById(id), HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("/delete")
 	public ResponseEntity<?> remove(@RequestBody Long id) {
 		if(service.removeById(id)) {
 			return new ResponseEntity<HttpStatus>(HttpStatus.OK);

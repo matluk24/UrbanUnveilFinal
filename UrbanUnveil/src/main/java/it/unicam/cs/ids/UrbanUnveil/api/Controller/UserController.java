@@ -41,17 +41,23 @@ public class UserController {
 	}
 	
 	@DeleteMapping("/remove")
-	public ResponseEntity<HttpStatus> remove(@RequestBody User u){
+	public ResponseEntity<String> remove(@RequestBody User u){
 		HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+		String s="L'user inserito non è corretto o non esiste";
 		if(service.remove(u)) {
 			httpStatus =   HttpStatus.OK;
+			s="L'user inserito è stato eliminato correttamente";
 		}
-		return new ResponseEntity<HttpStatus>(httpStatus);
+		return new ResponseEntity<String>(s,httpStatus);
 	}
 	
 	@GetMapping("/get/{id}")
-	public ResponseEntity<User> get(@PathVariable("id") Long id){
-		return new ResponseEntity<User>(service.get(id), HttpStatus.OK);
+	public ResponseEntity<?> get(@PathVariable("id") Long id){
+		User u = service.get(id);
+		if(u==null) {
+			return new ResponseEntity<String>("L'utente richiesto non è stato trovato", HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<User>(u, HttpStatus.OK);
 	}
 	
 	@GetMapping("/getAll")

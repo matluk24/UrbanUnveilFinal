@@ -25,6 +25,7 @@ public class User {
 			this.name = name;
 			this.surname = surname;
 			this.email = email;
+			this.CF=CF;
 			if(role==null) {
 				this.role=RoleEnum.TOURIST;
 			}

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.unicam.cs.ids.UrbanUnveil.api.models.Content;
@@ -37,9 +38,8 @@ public class ItinerarioController {
 	}
 	
 	@PostMapping("/add")
-	public ResponseEntity<Itinerario> add(@RequestBody User u, @RequestBody List<POI> p) {
-		Itinerario i= new Itinerario(u);
-		i.addStops(p);
+	public ResponseEntity<Itinerario> add(@RequestBody User u, @RequestParam("t") String t) {
+		Itinerario i= new Itinerario(u, t);
 		return new ResponseEntity<Itinerario>(service.save(i), HttpStatus.OK);
 	}
 	
@@ -52,7 +52,7 @@ public class ItinerarioController {
 	}
 	
 	@PutMapping("/addPoi")
-	public ResponseEntity<?> addPoi(@RequestBody Long id, @RequestBody POI p) {
+	public ResponseEntity<?> addPoi(@RequestParam("id") Long id, @RequestBody POI p) {
 		Itinerario i= service.get(id);
 		if(i==null) {
 			return new ResponseEntity<String>("L'itinerario non è stato trovato", HttpStatus.NOT_FOUND);
@@ -61,7 +61,7 @@ public class ItinerarioController {
 	}
 	
 	@PutMapping("/addmorethanonePoi")
-	public ResponseEntity<?> addListPoi(@RequestBody Long id, @RequestBody List<POI> p) {
+	public ResponseEntity<?> addListPoi(@RequestParam("id") Long id, @RequestBody List<POI> p) {
 		Itinerario i= service.get(id);
 		if(i==null) {
 			return new ResponseEntity<String>("L'itinerario non è stato trovato", HttpStatus.NOT_FOUND);
@@ -70,7 +70,7 @@ public class ItinerarioController {
 	}
 	
 	@PutMapping("/removePoi")
-	public ResponseEntity<?> removePoi(@RequestBody Long id, @RequestBody POI p) {
+	public ResponseEntity<?> removePoi(@RequestParam("id") Long id, @RequestBody POI p) {
 		Itinerario i= service.get(id);
 		if(i==null) {
 			return new ResponseEntity<String>("L'itinerario non è stato trovato", HttpStatus.NOT_FOUND);
@@ -79,7 +79,7 @@ public class ItinerarioController {
 	}
 	
 	@PutMapping("/addContent")
-	public ResponseEntity<?> addContent(@RequestBody Long id, @RequestBody Content c) {
+	public ResponseEntity<?> addContent(@RequestParam("id") Long id, @RequestBody Content c) {
 		Itinerario i= service.get(id);
 		if(i==null) {
 			return new ResponseEntity<String>("L'itinerario non è stato trovato", HttpStatus.NOT_FOUND);
@@ -88,7 +88,7 @@ public class ItinerarioController {
 	}
 	
 	@PutMapping("/addmorethanoneContent")
-	public ResponseEntity<?> addMoreContent(@RequestBody Long id, @RequestBody List<Content> c) {
+	public ResponseEntity<?> addMoreContent(@RequestParam("id") Long id, @RequestBody List<Content> c) {
 		Itinerario i= service.get(id);
 		if(i==null) {
 			return new ResponseEntity<String>("L'itinerario non è stato trovato", HttpStatus.NOT_FOUND);
@@ -97,7 +97,7 @@ public class ItinerarioController {
 	}
 	
 	@PutMapping("/removeContent")
-	public ResponseEntity<?> addPoi(@RequestBody Long id, @RequestBody Content c) {
+	public ResponseEntity<?> addPoi(@RequestParam("id") Long id, @RequestBody Content c) {
 		Itinerario i= service.get(id);
 		if(i==null) {
 			return new ResponseEntity<String>("L'itinerario non è stato trovato", HttpStatus.NOT_FOUND);

@@ -22,7 +22,7 @@ import jakarta.persistence.OneToOne;
 public class POI {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	@Embedded
 	private OSMNode posizione;

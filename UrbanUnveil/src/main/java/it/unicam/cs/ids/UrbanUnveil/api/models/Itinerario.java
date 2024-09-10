@@ -52,6 +52,12 @@ public class Itinerario {
 	public void addStops(List<POI> stops) {
 		this.stops.addAll(stops);
 	}
+	public void addStop(POI stop) {
+		this.stops.add(stop);
+	}
+	public void removeStop(POI stop) {
+		this.stops.remove(stop);
+	}
 	public List<Content> getContents() {
 		return contents;
 	}
@@ -60,6 +66,12 @@ public class Itinerario {
 	}
 	public void addContents(List<Content> contents) {
 		this.contents.addAll(contents);
+	}
+	public void addContent(Content content) {
+		this.contents.add(content);
+	}
+	public void removeContent(Content content) {
+		this.contents.remove(content);
 	}
 	@Override
 	public int hashCode() {

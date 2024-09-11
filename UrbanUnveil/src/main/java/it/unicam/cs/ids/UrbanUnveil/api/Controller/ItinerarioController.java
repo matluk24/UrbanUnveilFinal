@@ -106,25 +106,23 @@ public class ItinerarioController {
 	}
 	
 	@DeleteMapping("/remove")
-	public ResponseEntity<HttpStatus> remove(@RequestBody Long id) {
+	public ResponseEntity<?> remove(@RequestBody Long id) {
 		if(service.remove(id)) {
-			return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+			return new ResponseEntity<String>("Itinerario rimosso con successo",HttpStatus.OK);
 		}
 		else {
-			return new ResponseEntity<HttpStatus>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>("L'itinerario da rimuovere non è stato trovato", HttpStatus.NOT_FOUND);
 		}
 	}
 	
 	@GetMapping("/get/{id}")
-	public ResponseEntity<Itinerario> get(@PathVariable("id") Long id) {
-		Itinerario i;
-		if(service.get(id)!=null) {
-			i=service.get(id);
+	public ResponseEntity<?> get(@PathVariable("id") Long id) {
+		Itinerario i=service.get(id);
+		if(i!=null) {
 			return new ResponseEntity<Itinerario>(i, HttpStatus.OK);
 		}
 		else {
-			i=null;
-			return new ResponseEntity<Itinerario>(i, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>("L'itinerario richiesto non è stato trovato", HttpStatus.NOT_FOUND);
 		}
 		
 	}

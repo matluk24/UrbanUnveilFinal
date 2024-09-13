@@ -25,10 +25,10 @@ public class VideoContentHandler implements ContentHandler {
         String contentType = metadata.get(Metadata.CONTENT_TYPE);
         String duration = metadata.get("xmpDM:duration");
         String frameRate = metadata.get("xmpDM:videoFrameRate");
-        String width = metadata.get("tiff:ImageWidth");
-        String height = metadata.get("tiff:ImageLength");
+        String width = metadata.get(Metadata.IMAGE_WIDTH);
+        String height = metadata.get(Metadata.IMAGE_LENGTH);
 
-        return new VideoContent(content, file.getOriginalFilename(), contentType, duration, frameRate, width, height);
+        return new VideoContent(content, file.getOriginalFilename(), duration, frameRate, width, height);
     }
 }
 

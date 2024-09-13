@@ -12,10 +12,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 
 import it.unicam.cs.ids.UrbanUnveil.api.DesignPattern.ContentHandlerFactory;
@@ -45,38 +50,42 @@ public class ContentController {
     
 
 
-    @PostMapping(path = "/uploadContent", consumes = { MediaType.APPLICATION_JSON_VALUE,MediaType.MULTIPART_FORM_DATA_VALUE })
-    public ResponseEntity<Content> ContentUpload(@RequestPart("content") Content content, @RequestPart("file") MultipartFile file) throws IOException{
+    @PostMapping(path = "/uploadContent", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<Content> ContentUpload(@RequestParam("content") String content, @RequestParam("file") MultipartFile file) throws IOException{
+    	ObjectMapper o = new ObjectMapper();
+    	Content c = o.readValue(content, Content.class);
         if (file.isEmpty()) {
-            return new ResponseEntity<Content>(content, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<Content>(c, HttpStatus.BAD_REQUEST);
         }
 
 
 
         	// Estraggo l'handler giusto e creo l'oggetto Content
         	String contentType = file.getContentType();
+        	System.out.println(contentType);
+        	c.setContenttype(contentType);
         	ContentHandler handler = contentHandlerFactory.getHandler(contentType);
-        	content = handler.handleContent(content, file);
+        	c = handler.handleContent(c, file);
         	
         	System.out.println(content);
             
             //estraggo il Service giusto e salvo il file nella cartella di destinazione
-            ContentService contentService = contentServiceFactory.getService(content);
-            File f= new File(content.getPath());
+            ContentService contentService = contentServiceFactory.getService(c);
+            File f= new File(c.getPath());
             f.createNewFile();
             file.transferTo(f);
             
             
-            Content savedContent = contentService.save(content);
+            Content savedContent = contentService.save(c);
             HttpStatus httpStatus = HttpStatus.CONFLICT;
-            if(savedContent.equals(content)) {
+            if(savedContent.equals(c)) {
             	httpStatus = HttpStatus.OK;
             }
             return new ResponseEntity<Content>(savedContent, httpStatus);
         }
     
-    @GetMapping("/load")
-    public ResponseEntity<Content> loadContent(@PathVariable Long id, @PathVariable String fileType) throws IOException{
+    @GetMapping("/load/{id}/{fileType}")
+    public ResponseEntity<Content> loadContent(@PathVariable("id") Long id, @PathVariable("fileType") String fileType) throws IOException{
     	// Estraggo l'handler giusto e creo l'oggetto Content
     	Content content;
     	HttpStatus httpStatus;
@@ -100,9 +109,8 @@ public class ContentController {
     @DeleteMapping("/delete")
     public  ResponseEntity<Content>  deleteContent(@RequestBody Content content) throws IOException{
         // Logica per determinare il tipo di contenuto basato su contentEnum
-
-        ContentService contentService = contentServiceFactory.getService(content);
-        
+        ContentService contentService = contentServiceFactory.getService(content.getContenttype());
+        System.out.println(content.getId());
         Content c = contentService.delete(content.getId());
         HttpStatus httpStatus = HttpStatus.NOT_FOUND;
          
@@ -114,9 +122,9 @@ public class ContentController {
         	
     }
     
-    @PostMapping("/update")
-    public ResponseEntity<Content> updateContent(@RequestBody Content content) throws IOException{
-        ContentService contentService = contentServiceFactory.getService(content);
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Content> updateContent(@PathVariable("id") Long id, @RequestBody Content content) throws IOException{
+        ContentService contentService = contentServiceFactory.getService(content.getContenttype());
         
         Content c = contentService.update(content);
         HttpStatus httpStatus = HttpStatus.CONFLICT;

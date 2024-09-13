@@ -19,6 +19,7 @@ public class Content {
 	private String title;
 	private String descr;
 	private String path;
+	private String contenttype;
 	
 	public Content() {
 		
@@ -39,7 +40,13 @@ public class Content {
 	
 	public Content(Content content, String dest) {
 		this.publisher = content.getPublisher();
-		this.state = content.getState();
+		if(content.getState()==null) {
+			state=StateEnum.WAITING;
+		}
+		else {
+			state=content.getState();
+		}
+		this.contenttype=content.getContenttype();
 		this.title = content.getTitle();
 		this.descr = content.getDescr();
 		this.path = dest;	
@@ -77,7 +84,14 @@ public class Content {
 	public void setPath(String path) {
 		this.path = path;
 	}
-	
+	public String getContenttype() {
+		return contenttype;
+	}
+	public void setContenttype(String contenttype) {
+		this.contenttype = contenttype;
+		System.out.println(this.contenttype);
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(Id, descr, path, publisher, state, title);

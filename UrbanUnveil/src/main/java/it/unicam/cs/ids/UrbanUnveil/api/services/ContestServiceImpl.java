@@ -1,5 +1,7 @@
 package it.unicam.cs.ids.UrbanUnveil.api.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +35,11 @@ private ContestRepository repo;
 			return repo.findById(id).get();
 		}
 		return null;
+	}
+	
+	@Override
+	public List<Contest> getAll() {
+		return repo.findAll();
 	}
 
 	@Override

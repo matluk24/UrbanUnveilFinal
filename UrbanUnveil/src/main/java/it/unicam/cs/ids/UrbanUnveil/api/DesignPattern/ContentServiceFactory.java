@@ -43,11 +43,11 @@ public class ContentServiceFactory {
     }
     
     public ContentService getService(String fileType) {
-    	if (fileType.equals("Image")) {
+    	if (fileType.startsWith("image")) {
             return imageContentService;
-        } else if (fileType.equals("Video")) {
+        } else if (fileType.startsWith("video")) {
             return videoContentService;
-        } else if (fileType.equals("Text")) {
+        } else if (fileType.startsWith("text")) {
             return textContentService;
         } else {
             throw new IllegalArgumentException("Unsupported file type");

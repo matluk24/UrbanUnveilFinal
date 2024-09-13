@@ -8,7 +8,6 @@ import jakarta.persistence.Entity;
 
 @Entity
 public class VideoContent extends Content {
-	private String contentType;
     private String duration;
     private String frameRate;
     private String width;
@@ -26,23 +25,14 @@ public class VideoContent extends Content {
         this.duration = duration;
     }
     
-    public VideoContent(Content content, String fileName, String contentType, String duration, String frameRate, String width, String height) {
+    public VideoContent(Content content, String fileName, String duration, String frameRate, String width, String height) {
     	super(content, UPLOAD_DIR + fileName);
-    	this.contentType = contentType;
     	this.duration = duration;
     	this.frameRate = frameRate;
     	this.width = width;
     	this.height = height;
     	
     }
-    public String getContentType() {
-		return contentType;
-	}
-
-	public void setContentType(String contentType) {
-		this.contentType = contentType;
-	}
-
 	public String getFrameRate() {
 		return frameRate;
 	}
@@ -82,7 +72,7 @@ public class VideoContent extends Content {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(contentType, duration, frameRate, height, width);
+		result = prime * result + Objects.hash(duration, frameRate, height, width);
 		return result;
 	}
 
@@ -95,14 +85,14 @@ public class VideoContent extends Content {
 		if (getClass() != obj.getClass())
 			return false;
 		VideoContent other = (VideoContent) obj;
-		return Objects.equals(contentType, other.contentType) && Objects.equals(duration, other.duration)
+		return Objects.equals(duration, other.duration)
 				&& Objects.equals(frameRate, other.frameRate) && Objects.equals(height, other.height)
 				&& Objects.equals(width, other.width);
 	}
 
 	@Override
 	public String toString() {
-		return "VideoContent [contentType=" + contentType + ", duration=" + duration + ", frameRate=" + frameRate
+		return "VideoContent [Duration=" + duration + ", frameRate=" + frameRate
 				+ ", width=" + width + ", height=" + height + ", toString()=" + super.toString() + ", getClass()="
 				+ getClass() + "]";
 	}

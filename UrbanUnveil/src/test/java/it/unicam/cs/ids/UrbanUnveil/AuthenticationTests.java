@@ -27,7 +27,7 @@ public class AuthenticationTests {
 	public void registrazioneTest() {
 		User u = new User("Mattia", "Luciani", "mattia@boh.it", "MNBHDGE", "1234", null);
 		
-		u =authC.sighin(u).getBody();
+		u =(User) authC.sighin(u).getBody();
 		
 		Assertions.assertEquals(u, userC.get(Integer.toUnsignedLong(1)).getBody());
 		

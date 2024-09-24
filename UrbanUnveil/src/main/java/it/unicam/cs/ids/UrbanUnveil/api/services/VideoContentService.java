@@ -1,6 +1,8 @@
 package it.unicam.cs.ids.UrbanUnveil.api.services;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -47,9 +49,9 @@ public class VideoContentService implements ContentService {
 	public Content delete(Long id) throws IOException{
 		if(repo.existsById(id)) {
 			repo.deleteById(id);
-			return null;
+			return  new VideoContent();
 		}
-		return new VideoContent();
+		return null;
 
 	}
 	
@@ -63,6 +65,9 @@ public class VideoContentService implements ContentService {
 		}
 		 return new VideoContent();
 		
+	}
+	public List<Content> getAll(){
+		return new LinkedList<Content>(repo.findAll());
 	}
 
 }

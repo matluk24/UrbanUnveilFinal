@@ -3,6 +3,8 @@ package it.unicam.cs.ids.UrbanUnveil.api.services;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import it.unicam.cs.ids.UrbanUnveil.api.models.Content;
 import it.unicam.cs.ids.UrbanUnveil.api.models.TextContent;
+import it.unicam.cs.ids.UrbanUnveil.api.models.VideoContent;
 import it.unicam.cs.ids.UrbanUnveil.api.repo.TextContentRepository;
 
 @Service
@@ -41,14 +44,14 @@ public class TextContentService implements ContentService {
 		if(repo.existsById(id)) {
 			return repo.findById(id).get();
 		 }
-		 return new TextContent();
+		 return null;
 	}
 
 	@Override
 	public Content delete(Long id) throws IOException{
 		if(repo.existsById(id)) {
 			repo.deleteById(id);
-			return null;
+			return  repo.findById(id).get();
 		}
 		return new TextContent();
 
@@ -109,6 +112,10 @@ public class TextContentService implements ContentService {
 		file = file+" "+userInput;
 		
 		return file;
+	}
+	
+	public List<Content> getAll(){
+		return new LinkedList<Content>(repo.findAll());
 	}
 
 }

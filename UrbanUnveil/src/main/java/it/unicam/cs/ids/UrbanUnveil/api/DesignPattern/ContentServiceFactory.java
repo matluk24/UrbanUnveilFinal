@@ -11,7 +11,6 @@ import it.unicam.cs.ids.UrbanUnveil.api.services.VideoContentService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
 @Component
 public class ContentServiceFactory {
@@ -43,11 +42,11 @@ public class ContentServiceFactory {
     }
     
     public ContentService getService(String fileType) {
-    	if (fileType.equals("Image")) {
+    	if (fileType.startsWith("image")) {
             return imageContentService;
-        } else if (fileType.equals("Video")) {
+        } else if (fileType.startsWith("video")) {
             return videoContentService;
-        } else if (fileType.equals("Text")) {
+        } else if (fileType.startsWith("text")) {
             return textContentService;
         } else {
             throw new IllegalArgumentException("Unsupported file type");

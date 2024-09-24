@@ -1,6 +1,7 @@
 package it.unicam.cs.ids.UrbanUnveil.api.services;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -12,4 +13,5 @@ public interface ContentService {
 	public Content load(Long id) throws IOException;
 	public Content delete(Long id) throws IOException;
 	public Content update(Content c) throws IOException;
+	public List<Content> getAll();
 }

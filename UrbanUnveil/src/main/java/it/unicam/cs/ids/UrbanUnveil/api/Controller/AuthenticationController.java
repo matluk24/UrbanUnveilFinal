@@ -12,16 +12,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import it.unicam.cs.ids.UrbanUnveil.api.models.User;
 import it.unicam.cs.ids.UrbanUnveil.api.services.Authentication;
+import it.unicam.cs.ids.UrbanUnveil.api.services.UserService;
 
 @RestController
 @RequestMapping("/auth")
 public class AuthenticationController {
 	
 	private Authentication service;
+	private UserService uService;
 	
 	@Autowired
-	public AuthenticationController(Authentication auth) {
+	public AuthenticationController(Authentication auth, UserService u) {
 		this.service = auth;
+		uService=u;
 	}
 	
 	public AuthenticationController() {
@@ -39,7 +42,10 @@ public class AuthenticationController {
 	}
 	
 	@PostMapping("/Signin")
-	public ResponseEntity<User> sighin(@RequestBody User user){
+	public ResponseEntity<?> sighin(@RequestBody User user){
+		if(uService.get(user.getId())!=null) {
+			return new ResponseEntity<String>("L'utente esiste già", HttpStatus.CONFLICT);
+		}
 		return new ResponseEntity<User>(service.registrazione(user), HttpStatus.OK);
 	}
 }

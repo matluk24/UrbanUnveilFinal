@@ -36,13 +36,14 @@ public class POITests {
 		
 		POI p=null;
 		try {
-			 p= new POI(osmc.search("New York").getBody(), userc.get(Integer.toUnsignedLong(1)).getBody(), null);
+			 p= new POI(osmc.search("New York").getBody(), (User) userc.get(Integer.toUnsignedLong(1)).getBody(), null);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		p= c.add(p).getBody();
-		POI pt = c.getByID(Integer.toUnsignedLong(3)).getBody();
+		p= (POI) c.add(p).getBody();
+		System.out.println(c.getAll().getBody());
+		POI pt = (POI) c.getByID(Integer.toUnsignedLong(3)).getBody();
 		
 		Assertions.assertEquals(p, pt);
 		
@@ -59,7 +60,7 @@ public class POITests {
 		System.out.println(userc.getAll());		
 		POI p=null;
 		try {
-			 p= new POI(osmc.search("Osimo").getBody(), userc.get(Integer.toUnsignedLong(1)).getBody(), null);
+			 p= new POI(osmc.search("Osimo").getBody(), (User) userc.get(Integer.toUnsignedLong(1)).getBody(), null);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -67,7 +68,7 @@ public class POITests {
 		c.add(p);
 		l.add(p);
 		try {
-			 p= new POI(osmc.search("Castelfidardo").getBody(), userc.get(Integer.toUnsignedLong(1)).getBody(), null);
+			 p= new POI(osmc.search("Castelfidardo").getBody(), (User) userc.get(Integer.toUnsignedLong(1)).getBody(), null);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

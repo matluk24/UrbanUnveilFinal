@@ -18,11 +18,11 @@ public class ContentHandlerFactory {
     }
 
     public ContentHandler getHandler(String contentType) {
-        if (contentType.endsWith("image")) {
+        if (contentType.startsWith("image")) {
             return handlers.get("imageContentHandler");
-        } else if (contentType.endsWith("video")) {
+        } else if (contentType.startsWith("video")) {
             return handlers.get("videoContentHandler");
-        } else if (contentType.endsWith("plain")) {
+        } else if (contentType.startsWith("text")) {
             return handlers.get("textContentHandler");
         }
         throw new IllegalArgumentException("Unsupported content type: " + contentType);

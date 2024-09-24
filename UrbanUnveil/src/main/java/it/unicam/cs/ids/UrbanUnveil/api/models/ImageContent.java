@@ -20,15 +20,15 @@ public class ImageContent extends Content{
 		
 	}
 
-    public ImageContent(User publisher, StateEnum state, String title, String descr, String fileName, int width, int height,String format) {
-        super(publisher, state, title, descr, UPLOAD_DIR + fileName);
+    public ImageContent(User publisher, StateEnum state, String title, String descr, String fileName, int width, int height,String format,String contentType) {
+        super(publisher, state, title, descr, UPLOAD_DIR + fileName, contentType);
         this.width = width;
         this.height = height;
         this.format = format;
     }
     
-	public ImageContent(Content content, String fileName, int width, int height,String format) {
-		super(content, UPLOAD_DIR + fileName);
+	public ImageContent(Content content, String fileName, int width, int height,String format, String contentType) {
+		super(content, UPLOAD_DIR + fileName, contentType);
 		this.width = width;
         this.height = height;
         this.format = format;

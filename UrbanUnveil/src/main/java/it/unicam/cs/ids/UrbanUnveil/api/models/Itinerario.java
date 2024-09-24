@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,15 +21,20 @@ public class Itinerario {
 	private String title;
 	@ManyToOne
 	private User publisher;
-	@OneToMany
+	@OneToMany(cascade=CascadeType.ALL)
 	private List<POI> stops;
-	@OneToMany
+	@OneToMany(cascade=CascadeType.ALL)
 	private List<Content> contents;
 	
-	public Itinerario(User u) {
+	public Itinerario(User u, String t) {
+		title=t;
 		publisher=u;
 		stops=new LinkedList<POI>();
 		contents = new LinkedList<Content>();
+	}
+	
+	public Itinerario() {
+		
 	}
 	
 	public User getPublisher() {
@@ -52,6 +58,12 @@ public class Itinerario {
 	public void addStops(List<POI> stops) {
 		this.stops.addAll(stops);
 	}
+	public void addStop(POI stop) {
+		this.stops.add(stop);
+	}
+	public void removeStop(POI stop) {
+		this.stops.remove(stop);
+	}
 	public List<Content> getContents() {
 		return contents;
 	}
@@ -61,6 +73,17 @@ public class Itinerario {
 	public void addContents(List<Content> contents) {
 		this.contents.addAll(contents);
 	}
+	public void addContent(Content content) {
+		this.contents.add(content);
+	}
+	public void removeContent(Content content) {
+		this.contents.remove(content);
+	}
+	
+	public boolean isEmpty() {
+		return (stops == null)  &&  (contents == null );
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(Id, contents, publisher, stops);

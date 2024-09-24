@@ -25,13 +25,13 @@ public class User {
 			this.name = name;
 			this.surname = surname;
 			this.email = email;
+			this.CF=CF;
 			if(role==null) {
 				this.role=RoleEnum.TOURIST;
 			}
 			else {
 				this.role=role;
 			}
-			this.CF = CF;
 			this.password = password;
 
 		}
@@ -89,6 +89,10 @@ public class User {
 
 		public void setPassword(String password) {
 			this.password = password;
+		}
+		
+		public boolean isEmpty() {
+			return (name == null) && (surname == null) && (email == null) && (CF == null) && (password == null);
 		}
 
 		@java.lang.Override

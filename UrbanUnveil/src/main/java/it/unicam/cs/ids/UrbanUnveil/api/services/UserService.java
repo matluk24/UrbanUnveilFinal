@@ -10,7 +10,7 @@ import it.unicam.cs.ids.UrbanUnveil.api.models.User;
 public interface UserService {
 	public User update (User u);
 	public User add(User u);
-	public boolean remove(User u);
+	public boolean remove(Long id);
 	public User get(Long id);
 	public List<User> getAll();
 }

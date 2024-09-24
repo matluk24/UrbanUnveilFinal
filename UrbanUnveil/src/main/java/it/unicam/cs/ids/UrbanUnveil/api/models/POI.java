@@ -47,6 +47,9 @@ public class POI {
 		}
 	}
 	
+	public Long getId(){
+		return id;
+	}
 	public OSMNode getPosizione() {
 		return posizione;
 	}

@@ -23,13 +23,13 @@
 <tr>
 <td>
 <div class="infoBox" id="tests">
-<div class="counter">1</div>
+<div class="counter">2</div>
 <p>tests</p>
 </div>
 </td>
 <td>
 <div class="infoBox" id="failures">
-<div class="counter">1</div>
+<div class="counter">2</div>
 <p>failures</p>
 </div>
 </td>
@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.068s</div>
+<div class="counter">0.145s</div>
 <p>duration</p>
 </div>
 </td>
@@ -76,12 +76,25 @@
 <a name="testContentUpload()"></a>
 <h3 class="failures">testContentUpload()</h3>
 <span class="code">
-<pre>java.lang.AssertionError: Status expected:&lt;200&gt; but was:&lt;415&gt;
+<pre>java.lang.AssertionError: Status expected:&lt;200&gt; but was:&lt;400&gt;
 	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:59)
 	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:122)
 	at org.springframework.test.web.servlet.result.StatusResultMatchers.lambda$matcher$9(StatusResultMatchers.java:637)
 	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:214)
-	at it.unicam.cs.ids.UrbanUnveil.api.Controller.ContentControllerTest.testContentUpload(ContentControllerTest.java:37)
+	at it.unicam.cs.ids.UrbanUnveil.api.Controller.ContentControllerTest.testContentUpload(ContentControllerTest.java:69)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+</pre>
+</span>
+</div>
+<div class="test">
+<a name="testWriteArticle()"></a>
+<h3 class="failures">testWriteArticle()</h3>
+<span class="code">
+<pre>java.lang.NullPointerException: Cannot invoke &quot;it.unicam.cs.ids.UrbanUnveil.api.models.TextContent.getPath()&quot; because &quot;c&quot; is null
+	at it.unicam.cs.ids.UrbanUnveil.api.services.TextContentService.writeArticle(TextContentService.java:93)
+	at it.unicam.cs.ids.UrbanUnveil.api.Controller.ContentControllerTest.testWriteArticle(ContentControllerTest.java:78)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
@@ -101,7 +114,12 @@
 </thead>
 <tr>
 <td class="failures">testContentUpload()</td>
-<td class="failures">0.068s</td>
+<td class="failures">0.136s</td>
+<td class="failures">failed</td>
+</tr>
+<tr>
+<td class="failures">testWriteArticle()</td>
+<td class="failures">0.009s</td>
 <td class="failures">failed</td>
 </tr>
 </table>
@@ -109,8 +127,8 @@
 <div id="tab2" class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>2024-09-04T12:43:57.681+02:00  INFO 27040 --- [UrbanUnveil] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [it.unicam.cs.ids.UrbanUnveil.api.Controller.ContentControllerTest]: ContentControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2024-09-04T12:43:57.700+02:00  INFO 27040 --- [UrbanUnveil] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration it.unicam.cs.ids.UrbanUnveil.UrbanUnveilApplication for test class it.unicam.cs.ids.UrbanUnveil.api.Controller.ContentControllerTest
+<pre>2024-09-23T20:34:23.632+02:00  INFO 24152 --- [UrbanUnveil] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [it.unicam.cs.ids.UrbanUnveil.api.Controller.ContentControllerTest]: ContentControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-09-23T20:34:23.656+02:00  INFO 24152 --- [UrbanUnveil] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration it.unicam.cs.ids.UrbanUnveil.UrbanUnveilApplication for test class it.unicam.cs.ids.UrbanUnveil.api.Controller.ContentControllerTest
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -121,56 +139,73 @@
 
  :: Spring Boot ::                (v3.3.1)
 
-2024-09-04T12:43:57.729+02:00  WARN 27040 --- [UrbanUnveil] [    Test worker] ory$DuplicateJsonObjectContextCustomizer : 
+2024-09-23T20:34:23.684+02:00  WARN 24152 --- [UrbanUnveil] [    Test worker] ory$DuplicateJsonObjectContextCustomizer : 
 
 Found multiple occurrences of org.json.JSONObject on the class path:
 
-	jar:file:/C:/Users/mattl/.gradle/caches/modules-2/files-2.1/org.json/json/20211205/47032dcf2f69880f07dab3dc60b4b0ad97318308/json-20211205.jar!/org/json/JSONObject.class
-	jar:file:/C:/Users/mattl/.gradle/caches/modules-2/files-2.1/com.vaadin.external.google/android-json/0.0.20131108.vaadin1/fa26d351fe62a6a17f5cda1287c1c6110dec413f/android-json-0.0.20131108.vaadin1.jar!/org/json/JSONObject.class
+	jar:file:/C:/Users/franc/.gradle/caches/modules-2/files-2.1/org.json/json/20211205/47032dcf2f69880f07dab3dc60b4b0ad97318308/json-20211205.jar!/org/json/JSONObject.class
+	jar:file:/C:/Users/franc/.gradle/caches/modules-2/files-2.1/com.vaadin.external.google/android-json/0.0.20131108.vaadin1/fa26d351fe62a6a17f5cda1287c1c6110dec413f/android-json-0.0.20131108.vaadin1.jar!/org/json/JSONObject.class
 
 You may wish to exclude one of them to ensure predictable runtime behavior
 
-2024-09-04T12:43:57.731+02:00  INFO 27040 --- [UrbanUnveil] [    Test worker] i.u.c.i.U.a.C.ContentControllerTest      : Starting ContentControllerTest using Java 17.0.10 with PID 27040 (started by mattl in C:\Users\mattl\git\repository\UrbanUnveil)
-2024-09-04T12:43:57.731+02:00  INFO 27040 --- [UrbanUnveil] [    Test worker] i.u.c.i.U.a.C.ContentControllerTest      : No active profile set, falling back to 1 default profile: &quot;default&quot;
-2024-09-04T12:43:57.956+02:00  INFO 27040 --- [UrbanUnveil] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-09-04T12:43:57.983+02:00  INFO 27040 --- [UrbanUnveil] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 26 ms. Found 7 JPA repository interfaces.
-2024-09-04T12:43:58.088+02:00  INFO 27040 --- [UrbanUnveil] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
-2024-09-04T12:43:58.089+02:00  INFO 27040 --- [UrbanUnveil] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection conn10: url=jdbc:h2:mem:testdb user=USER
-2024-09-04T12:43:58.089+02:00  INFO 27040 --- [UrbanUnveil] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
-2024-09-04T12:43:58.092+02:00  INFO 27040 --- [UrbanUnveil] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-09-04T12:43:58.097+02:00  INFO 27040 --- [UrbanUnveil] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2024-09-04T12:43:58.112+02:00  INFO 27040 --- [UrbanUnveil] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-09-04T12:43:58.114+02:00  WARN 27040 --- [UrbanUnveil] [    Test worker] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2024-09-04T12:43:58.227+02:00  INFO 27040 --- [UrbanUnveil] [    Test worker] o.h.m.i.EntityInstantiatorPojoStandard   : HHH000182: No default (no-argument) constructor for class: it.unicam.cs.ids.UrbanUnveil.api.models.Itinerario (class must be instantiated by Interceptor)
-2024-09-04T12:43:58.270+02:00  INFO 27040 --- [UrbanUnveil] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2024-09-04T12:43:58.296+02:00  INFO 27040 --- [UrbanUnveil] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-09-04T12:43:58.412+02:00  WARN 27040 --- [UrbanUnveil] [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-09-04T12:43:58.485+02:00  WARN 27040 --- [UrbanUnveil] [    Test worker] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
-2024-09-04T12:43:58.498+02:00  INFO 27040 --- [UrbanUnveil] [    Test worker] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
-2024-09-04T12:43:58.533+02:00  INFO 27040 --- [UrbanUnveil] [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2024-09-04T12:43:58.533+02:00  INFO 27040 --- [UrbanUnveil] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2024-09-04T12:43:58.535+02:00  INFO 27040 --- [UrbanUnveil] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
-2024-09-04T12:43:58.544+02:00  INFO 27040 --- [UrbanUnveil] [    Test worker] i.u.c.i.U.a.C.ContentControllerTest      : Started ContentControllerTest in 0.841 seconds (process running for 9.51)
-2024-09-04T12:43:58.599+02:00  WARN 27040 --- [UrbanUnveil] [    Test worker] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpMediaTypeNotSupportedException: Content-Type 'multipart/form-data;charset=UTF-8' is not supported]
+2024-09-23T20:34:23.686+02:00  INFO 24152 --- [UrbanUnveil] [    Test worker] i.u.c.i.U.a.C.ContentControllerTest      : Starting ContentControllerTest using Java 17.0.11 with PID 24152 (started by franc in C:\Users\franc\git\UrbanUnveilFinal\UrbanUnveil)
+2024-09-23T20:34:23.686+02:00  INFO 24152 --- [UrbanUnveil] [    Test worker] i.u.c.i.U.a.C.ContentControllerTest      : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2024-09-23T20:34:23.921+02:00  INFO 24152 --- [UrbanUnveil] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-09-23T20:34:23.947+02:00  INFO 24152 --- [UrbanUnveil] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 25 ms. Found 7 JPA repository interfaces.
+2024-09-23T20:34:24.056+02:00  INFO 24152 --- [UrbanUnveil] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2024-09-23T20:34:24.057+02:00  INFO 24152 --- [UrbanUnveil] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection conn10: url=jdbc:h2:mem:testdb user=USER
+2024-09-23T20:34:24.058+02:00  INFO 24152 --- [UrbanUnveil] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2024-09-23T20:34:24.060+02:00  INFO 24152 --- [UrbanUnveil] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-09-23T20:34:24.063+02:00  INFO 24152 --- [UrbanUnveil] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-09-23T20:34:24.077+02:00  INFO 24152 --- [UrbanUnveil] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-09-23T20:34:24.079+02:00  WARN 24152 --- [UrbanUnveil] [    Test worker] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-09-23T20:34:24.224+02:00  INFO 24152 --- [UrbanUnveil] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-09-23T20:34:24.250+02:00  INFO 24152 --- [UrbanUnveil] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-09-23T20:34:24.371+02:00  WARN 24152 --- [UrbanUnveil] [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-09-23T20:34:24.445+02:00  WARN 24152 --- [UrbanUnveil] [    Test worker] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2024-09-23T20:34:24.463+02:00  INFO 24152 --- [UrbanUnveil] [    Test worker] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+2024-09-23T20:34:24.500+02:00  INFO 24152 --- [UrbanUnveil] [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-09-23T20:34:24.501+02:00  INFO 24152 --- [UrbanUnveil] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-09-23T20:34:24.503+02:00  INFO 24152 --- [UrbanUnveil] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2024-09-23T20:34:24.514+02:00  INFO 24152 --- [UrbanUnveil] [    Test worker] i.u.c.i.U.a.C.ContentControllerTest      : Started ContentControllerTest in 0.854 seconds (process running for 8.808)
+2024-09-23T20:34:24.637+02:00  WARN 24152 --- [UrbanUnveil] [    Test worker] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.bind.MissingServletRequestParameterException: Required request parameter 'content' for method parameter type String is not present]
 
 MockHttpServletRequest:
       HTTP Method = POST
       Request URI = /content/uploadContent
-       Parameters = {title=[Test Title], descr=[Test Description]}
+       Parameters = {contnet=[{
+  &quot;publisher&quot; : {
+    &quot;id&quot; : 1,
+    &quot;name&quot; : &quot;Mattia&quot;,
+    &quot;surname&quot; : &quot;Luciani&quot;,
+    &quot;email&quot; : &quot;mattia@boh.it&quot;,
+    &quot;password&quot; : &quot;1234&quot;,
+    &quot;role&quot; : &quot;TOURIST&quot;,
+    &quot;cf&quot; : &quot;MNBHDGE&quot;,
+    &quot;empty&quot; : false
+  },
+  &quot;state&quot; : &quot;WAITING&quot;,
+  &quot;title&quot; : &quot;Test Title&quot;,
+  &quot;descr&quot; : &quot;Test Description&quot;,
+  &quot;path&quot; : &quot;&quot;,
+  &quot;contenttype&quot; : &quot;text/plain&quot;,
+  &quot;empty&quot; : false,
+  &quot;id&quot; : null
+}]}
           Headers = [Content-Type:&quot;multipart/form-data;charset=UTF-8&quot;]
              Body = null
     Session Attrs = {}
 
 Handler:
              Type = it.unicam.cs.ids.UrbanUnveil.api.Controller.ContentController
-           Method = it.unicam.cs.ids.UrbanUnveil.api.Controller.ContentController#ContentUpload(Content, MultipartFile)
+           Method = it.unicam.cs.ids.UrbanUnveil.api.Controller.ContentController#ContentUpload(String, MultipartFile)
 
 Async:
     Async started = false
      Async result = null
 
 Resolved Exception:
-             Type = org.springframework.web.HttpMediaTypeNotSupportedException
+             Type = org.springframework.web.bind.MissingServletRequestParameterException
 
 ModelAndView:
         View name = null
@@ -181,9 +216,9 @@ FlashMap:
        Attributes = null
 
 MockHttpServletResponse:
-           Status = 415
-    Error message = Content-Type 'multipart/form-data;charset=UTF-8' is not supported.
-          Headers = [Accept:&quot;application/json, application/*+json&quot;]
+           Status = 400
+    Error message = Required parameter 'content' is not present.
+          Headers = []
      Content type = null
              Body = 
     Forwarded URL = null
@@ -200,7 +235,7 @@ MockHttpServletResponse:
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 8.8</a> at 4 set 2024, 12:43:58</p>
+<a href="http://www.gradle.org">Gradle 8.8</a> at 23 set 2024, 20:34:24</p>
 </div>
 </div>
 </body>

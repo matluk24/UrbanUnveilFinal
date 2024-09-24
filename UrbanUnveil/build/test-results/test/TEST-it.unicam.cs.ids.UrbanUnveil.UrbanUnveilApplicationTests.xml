@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="it.unicam.cs.ids.UrbanUnveil.UrbanUnveilApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-09-04T10:43:58" hostname="LAPTOP-OPDFGHKG" time="0.003">
+<testsuite name="it.unicam.cs.ids.UrbanUnveil.UrbanUnveilApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-09-23T18:34:24" hostname="FRANCESCOPC" time="0.003">
   <properties/>
   <testcase name="contextLoads()" classname="it.unicam.cs.ids.UrbanUnveil.UrbanUnveilApplicationTests" time="0.003"/>
-  <system-out><![CDATA[2024-09-04T12:43:58.685+02:00  INFO 27040 --- [UrbanUnveil] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [it.unicam.cs.ids.UrbanUnveil.UrbanUnveilApplicationTests]: UrbanUnveilApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2024-09-04T12:43:58.687+02:00  INFO 27040 --- [UrbanUnveil] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration it.unicam.cs.ids.UrbanUnveil.UrbanUnveilApplication for test class it.unicam.cs.ids.UrbanUnveil.UrbanUnveilApplicationTests
+  <system-out><![CDATA[2024-09-23T20:34:24.753+02:00  INFO 24152 --- [UrbanUnveil] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [it.unicam.cs.ids.UrbanUnveil.UrbanUnveilApplicationTests]: UrbanUnveilApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-09-23T20:34:24.755+02:00  INFO 24152 --- [UrbanUnveil] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration it.unicam.cs.ids.UrbanUnveil.UrbanUnveilApplication for test class it.unicam.cs.ids.UrbanUnveil.UrbanUnveilApplicationTests
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

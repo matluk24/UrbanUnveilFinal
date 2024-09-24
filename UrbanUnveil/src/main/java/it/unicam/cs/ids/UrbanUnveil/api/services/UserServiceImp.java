@@ -39,9 +39,9 @@ public class UserServiceImp implements UserService {
 	}
 
 	@Override
-	public boolean remove(User u) {
-		if(userRepo.existsById(u.getId())) {
-			userRepo.deleteById(u.getId());
+	public boolean remove(Long id) {
+		if(userRepo.existsById(id)) {
+			userRepo.deleteById(id);
 			return true;
 		}
 		return false;

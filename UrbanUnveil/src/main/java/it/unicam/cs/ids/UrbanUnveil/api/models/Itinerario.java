@@ -79,6 +79,11 @@ public class Itinerario {
 	public void removeContent(Content content) {
 		this.contents.remove(content);
 	}
+	
+	public boolean isEmpty() {
+		return (stops == null)  &&  (contents == null );
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(Id, contents, publisher, stops);

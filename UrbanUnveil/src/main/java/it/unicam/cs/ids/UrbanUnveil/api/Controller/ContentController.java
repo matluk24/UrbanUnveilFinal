@@ -2,6 +2,8 @@ package it.unicam.cs.ids.UrbanUnveil.api.Controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 
 import it.unicam.cs.ids.UrbanUnveil.api.DesignPattern.ContentHandlerFactory;
 import it.unicam.cs.ids.UrbanUnveil.api.DesignPattern.ContentServiceFactory;
@@ -49,36 +52,32 @@ public class ContentController {
 
 
     @PostMapping(path = "/uploadContent", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<Content> ContentUpload(@RequestParam("content") String content, @RequestParam("file") MultipartFile file) throws IOException{
-    	ObjectMapper o = new ObjectMapper();
-    	Content c = o.readValue(content, Content.class);
-        if (file.isEmpty()) {
-            return new ResponseEntity<Content>(c, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Content> ContentUpload(@RequestPart("content") String json, @RequestPart("file") MultipartFile file) throws IOException{
+      	ObjectMapper o = new ObjectMapper();
+    	Content content = o.readValue(json, Content.class);
+    	if (file.isEmpty()) {
+            return new ResponseEntity<Content>(content, HttpStatus.BAD_REQUEST);
         }
-
-
-
-        	// Estraggo l'handler giusto e creo l'oggetto Content
+        
         	String contentType = file.getContentType();
-        	System.out.println(contentType);
-        	c.setContenttype(contentType);
         	ContentHandler handler = contentHandlerFactory.getHandler(contentType);
-        	c = handler.handleContent(c, file);
+        	content = handler.handleContent(content, file);
         	
         	System.out.println(content);
             
             //estraggo il Service giusto e salvo il file nella cartella di destinazione
-            ContentService contentService = contentServiceFactory.getService(c);
-            File f= new File(c.getPath());
+            ContentService contentService = contentServiceFactory.getService(content);
+            File f= new File(content.getPath());
             f.createNewFile();
             file.transferTo(f);
             
             
-            Content savedContent = contentService.save(c);
+            Content savedContent = contentService.save(content);
             HttpStatus httpStatus = HttpStatus.CONFLICT;
-            if(savedContent.equals(c)) {
+            if(savedContent.equals(content)) {
             	httpStatus = HttpStatus.OK;
             }
+            System.out.println(savedContent.toString());
             return new ResponseEntity<Content>(savedContent, httpStatus);
         }
     
@@ -105,18 +104,18 @@ public class ContentController {
         }
     
     @DeleteMapping("/delete")
-    public  ResponseEntity<Content>  deleteContent(@RequestBody Content content) throws IOException{
+    public  ResponseEntity<String>  deleteContent(@RequestParam("id") Long id,@RequestParam("contentType") String contentType) throws IOException{
         // Logica per determinare il tipo di contenuto basato su contentEnum
-        ContentService contentService = contentServiceFactory.getService(content.getContenttype());
-        System.out.println(content.getId());
-        Content c = contentService.delete(content.getId());
-        HttpStatus httpStatus = HttpStatus.NOT_FOUND;
-         
+        ContentService contentService = contentServiceFactory.getService(contentType);
+        Content c = contentService.delete(id);
+        HttpStatus httpStatus = HttpStatus.OK;
+        String s = "Il Content è stato eliminato con successo";
         if(c==null) {
-        	httpStatus = HttpStatus.OK;
+        	httpStatus = HttpStatus.CONFLICT;
+        	s = "Il Content non è stato eliminato";
         }
         
-        return new ResponseEntity<Content>(c, httpStatus);
+        return new ResponseEntity<String>(s, httpStatus);
         	
     }
     
@@ -133,6 +132,15 @@ public class ContentController {
 			httpStatus = HttpStatus.BAD_REQUEST;
         
         return new ResponseEntity<Content>(c, httpStatus);
+    }
+    
+    @GetMapping("/getAll")
+    public ResponseEntity<List<Content>> getAll(){
+    	List contents = new LinkedList();
+    	contents.addAll((contentServiceFactory.getService("image")).getAll());
+    	contents.addAll((contentServiceFactory.getService("video")).getAll());
+    	contents.addAll((contentServiceFactory.getService("text")).getAll());
+    	return new ResponseEntity<List<Content>>(contents, HttpStatus.OK);
     }
     
 }

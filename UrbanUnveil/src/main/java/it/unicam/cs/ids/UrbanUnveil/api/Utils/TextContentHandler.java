@@ -23,7 +23,7 @@ public class TextContentHandler implements ContentHandler {
         long lineCount = contentText.lines().count();
         long wordCount = contentText.split("\\s+").length;
 
-        return new TextContent(content, file.getOriginalFilename(), lineCount, wordCount, file.getSize());
+        return new TextContent(content, file.getOriginalFilename(), file.getSize(), lineCount, wordCount, file.getContentType());
     }
 }
 

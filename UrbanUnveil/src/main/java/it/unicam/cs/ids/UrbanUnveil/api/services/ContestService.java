@@ -12,6 +12,6 @@ public interface ContestService {
 	public Contest add(Contest c);
 	public Contest get(Long id);
 	public List<Contest> getAll();
-	public boolean remove(Contest c);
+	public boolean remove(Long id);
 	public Contest update(Contest c);
 }

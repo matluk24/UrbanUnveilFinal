@@ -1,6 +1,8 @@
 package it.unicam.cs.ids.UrbanUnveil.api.services;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import it.unicam.cs.ids.UrbanUnveil.api.models.Content;
 import it.unicam.cs.ids.UrbanUnveil.api.models.ImageContent;
+import it.unicam.cs.ids.UrbanUnveil.api.models.VideoContent;
 import it.unicam.cs.ids.UrbanUnveil.api.repo.ImageContentRepository;
 
 @Service
@@ -45,9 +48,9 @@ public class ImageContentService implements ContentService {
 	public Content delete(Long id) throws IOException{
 		if(repo.existsById(id)) {
 			repo.deleteById(id);
-			return null;
+			return  new ImageContent();
 		}
-		return new ImageContent();
+		return null;
 
 	}
 	
@@ -61,6 +64,9 @@ public class ImageContentService implements ContentService {
 		}
 		 return new ImageContent();
 		
+	}
+	public List<Content> getAll(){
+		return new LinkedList<Content>(repo.findAll());
 	}
 
 }

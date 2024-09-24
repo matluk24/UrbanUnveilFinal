@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import it.unicam.cs.ids.UrbanUnveil.api.models.User;
 import it.unicam.cs.ids.UrbanUnveil.api.services.UserService;
@@ -42,10 +43,10 @@ public class UserController {
 	}
 	
 	@DeleteMapping("/remove")
-	public ResponseEntity<String> remove(@RequestBody User u){
+	public ResponseEntity<String> remove(@RequestBody Long id){
 		HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
 		String s="L'user inserito non è corretto o non esiste";
-		if(service.remove(u)) {
+		if(service.remove(id)) {
 			httpStatus =   HttpStatus.OK;
 			s="L'user inserito è stato eliminato correttamente";
 		}

@@ -19,14 +19,14 @@ public class TextContent extends Content {
 
     }
 
-    public TextContent(User publisher, StateEnum state, String title, String descr, String fileName, Long size, Long lineCount, Long wordCount) {
-        super(publisher, state, title, descr, UPLOAD_DIR + fileName);
+    public TextContent(User publisher, StateEnum state, String title, String descr, String fileName, Long size, Long lineCount, Long wordCount, String contentType) {
+        super(publisher, state, title, descr, UPLOAD_DIR + fileName, contentType);
         this.size = size;
         this.lineCount = lineCount;
         this.wordCount = wordCount;
     }
-    public TextContent(Content content, String fileName, Long size, Long lineCount, Long wordCount) {
-    	super(content, UPLOAD_DIR + fileName);
+    public TextContent(Content content, String fileName, Long size, Long lineCount, Long wordCount, String contentType) {
+    	super(content, UPLOAD_DIR + fileName, contentType);
     	this.size = size;
         this.lineCount = lineCount;
         this.wordCount = wordCount;

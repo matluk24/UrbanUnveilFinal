@@ -47,8 +47,9 @@ private ItinerarioRepository repo;
 	public boolean remove(Long id) {
 		if(repo.existsById(id)) {
 			repo.deleteById(id);
+			return true;
 		}
-		return repo.existsById(id);
+		return false;
 	}
 
 	@Override
@@ -91,7 +92,10 @@ private ItinerarioRepository repo;
 			return null;
 		}
 		i.removeStop(p);
-		return repo.saveAndFlush(i);
+		if(i.equals(repo.saveAndFlush(i))) {
+			return i;
+		}
+		return null;
 	}
 	
 	@Override
@@ -120,7 +124,10 @@ private ItinerarioRepository repo;
 			return null;
 		}
 		i.removeContent(c);
-		return repo.saveAndFlush(i);
+		if(i.equals(repo.saveAndFlush(i))) {
+			return i;
+		}
+		return null;
 	}
 
 }

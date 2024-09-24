@@ -11,7 +11,6 @@ import it.unicam.cs.ids.UrbanUnveil.api.services.VideoContentService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
 @Component
 public class ContentServiceFactory {

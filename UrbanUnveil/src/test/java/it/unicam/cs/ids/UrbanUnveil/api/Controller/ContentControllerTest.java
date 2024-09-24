@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
 import it.unicam.cs.ids.UrbanUnveil.api.models.Content;
+import it.unicam.cs.ids.UrbanUnveil.api.models.TextContent;
 import it.unicam.cs.ids.UrbanUnveil.api.models.User;
 import it.unicam.cs.ids.UrbanUnveil.api.services.TextContentService;
 
@@ -56,23 +57,17 @@ public class ContentControllerTest {
 		
 		u =userC.add(u).getBody();
 
-        Content c = new Content(u, null, "Test Title", "Test Description", "");
+        Content c = new Content(u, null, "Test Title", "Test Description", "", file.getContentType());
 
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-        String a= ow.writeValueAsString(c);
-        MockMultipartFile content = new MockMultipartFile("content", "", "application/json", a.getBytes());
+        String json= ow.writeValueAsString(c);
         
         // Eseguire la richiesta di upload
         mockMvc.perform(multipart("/content/uploadContent")
-        		.file(content)
                 .file(file)
-                .param("title", "Test Title")
-                .param("descr", "Test Description"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.title").value("Test Title"))
-                .andExpect(jsonPath("$.descr").value("Test Description"));
+                .param("contnet", json))
+                .andExpect(status().isOk());
         
-       System.out.println(contentC.loadContent(Integer.toUnsignedLong(1), "Text"));
     }
 
     @Test

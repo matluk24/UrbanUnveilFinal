@@ -41,9 +41,9 @@ public class POITests {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		p= c.add(p).getBody();
+		p= (POI) c.add(p).getBody();
 		System.out.println(c.getAll().getBody());
-		POI pt = c.getByID(Integer.toUnsignedLong(3)).getBody();
+		POI pt = (POI) c.getByID(Integer.toUnsignedLong(3)).getBody();
 		
 		Assertions.assertEquals(p, pt);
 		

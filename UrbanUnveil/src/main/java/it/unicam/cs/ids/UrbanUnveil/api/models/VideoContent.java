@@ -20,13 +20,13 @@ public class VideoContent extends Content {
 
     }
 
-    public VideoContent(User publisher, StateEnum state, String title, String descr, String fileName, String duration) {
-        super(publisher, state, title, descr, UPLOAD_DIR + fileName);
+    public VideoContent(User publisher, StateEnum state, String title, String descr, String fileName, String duration,String contentType) {
+        super(publisher, state, title, descr, UPLOAD_DIR + fileName, contentType);
         this.duration = duration;
     }
     
-    public VideoContent(Content content, String fileName, String duration, String frameRate, String width, String height) {
-    	super(content, UPLOAD_DIR + fileName);
+    public VideoContent(Content content, String fileName, String duration, String frameRate, String width, String height, String contentType) {
+    	super(content, UPLOAD_DIR + fileName, contentType);
     	this.duration = duration;
     	this.frameRate = frameRate;
     	this.width = width;
@@ -67,7 +67,7 @@ public class VideoContent extends Content {
 	public void setResolution(String duration) {
 		this.duration = duration;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

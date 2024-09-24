@@ -21,7 +21,7 @@ public class ImageContentHandler implements ContentHandler {
             int width = image.getWidth();
             int height = image.getHeight();
             String format = file.getContentType().split("/")[1];
-            return new ImageContent(content, file.getOriginalFilename(), width, height, format);
+            return new ImageContent(content, file.getOriginalFilename(), width, height, format,file.getContentType());
         }
     }
 }

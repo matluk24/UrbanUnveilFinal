@@ -38,17 +38,18 @@ public class ItinerarioController {
 	}
 	
 	@PostMapping("/add")
-	public ResponseEntity<Itinerario> add(@RequestBody User u, @RequestParam("t") String t) {
-		Itinerario i= new Itinerario(u, t);
+	public ResponseEntity<Itinerario> add(@RequestBody User u, @RequestParam("title") String title) {
+		Itinerario i= new Itinerario(u, title);
 		return new ResponseEntity<Itinerario>(service.save(i), HttpStatus.OK);
 	}
 	
 	@PutMapping("/update")
-	public ResponseEntity<?> update(@RequestBody Long id, @RequestBody String t) {
-		if(service.update(id, t)==null) {
+	public ResponseEntity<?> update(@RequestBody Long id, @RequestBody String title) {
+		Itinerario i=service.update(id, title);
+		if(i==null) {
 			return new ResponseEntity<String>("L'itinerario non è stato trovato", HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<Itinerario>(service.update(id, t), HttpStatus.OK);
+		return new ResponseEntity<Itinerario>(i, HttpStatus.OK);
 	}
 	
 	@PutMapping("/addPoi")
@@ -70,12 +71,22 @@ public class ItinerarioController {
 	}
 	
 	@PutMapping("/removePoi")
-	public ResponseEntity<?> removePoi(@RequestParam("id") Long id, @RequestBody POI p) {
-		Itinerario i= service.get(id);
-		if(i==null) {
-			return new ResponseEntity<String>("L'itinerario non è stato trovato", HttpStatus.NOT_FOUND);
+	public ResponseEntity<String> removePoi(@RequestParam("id") Long id, @RequestBody POI p) {
+		Itinerario i = service.removePoi(id, p);
+		String s = "";
+		HttpStatus status = HttpStatus.BAD_REQUEST;
+		if(i == null) {
+			s = "L'itinerario non è stato trovato";
+		}else if (i.isEmpty()) {
+			s = "Errore nella rimozione del POI";
+			status = HttpStatus.CONFLICT;
+		}else {
+			s = "POI rimosso con successo";
+			status = HttpStatus.OK;
 		}
-		return new ResponseEntity<Itinerario>(service.removePoi(id, p), HttpStatus.OK);
+		
+		return new ResponseEntity<String>(s, status
+				);
 	}
 	
 	@PutMapping("/addContent")
@@ -97,22 +108,29 @@ public class ItinerarioController {
 	}
 	
 	@PutMapping("/removeContent")
-	public ResponseEntity<?> addPoi(@RequestParam("id") Long id, @RequestBody Content c) {
-		Itinerario i= service.get(id);
-		if(i==null) {
-			return new ResponseEntity<String>("L'itinerario non è stato trovato", HttpStatus.NOT_FOUND);
+	public ResponseEntity<String> removeContent(@RequestParam("id") Long id, @RequestBody Content c) {
+		Itinerario i = service.removeContent(id, c);
+		String s = "";
+		HttpStatus status = HttpStatus.BAD_REQUEST;
+		if(i == null) {
+			s = "L'itinerario non è stato trovato";
+		}else if (i.isEmpty()) {
+			s = "Errore nella rimozione del Content";
+			 status = HttpStatus.CONFLICT;
+		}else {
+			s = "Content rimosso con successo";
+			status = HttpStatus.OK;
 		}
-		return new ResponseEntity<Itinerario>(service.removeContent(id, c), HttpStatus.OK);
+		
+		return new ResponseEntity<String>(s, status);
 	}
 	
 	@DeleteMapping("/remove")
 	public ResponseEntity<?> remove(@RequestBody Long id) {
-		if(service.remove(id)) {
-			return new ResponseEntity<String>("Itinerario rimosso con successo",HttpStatus.OK);
+		if(!service.remove(id)) {
+			return new ResponseEntity<String>("L'itinerario non è stato trovato", HttpStatus.BAD_REQUEST);
 		}
-		else {
-			return new ResponseEntity<String>("L'itinerario da rimuovere non è stato trovato", HttpStatus.NOT_FOUND);
-		}
+		return new ResponseEntity<String>("L'itinerario rimosso con successo", HttpStatus.OK);
 	}
 	
 	@GetMapping("/get/{id}")

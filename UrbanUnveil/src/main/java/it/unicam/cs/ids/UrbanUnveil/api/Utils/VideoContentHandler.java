@@ -28,7 +28,7 @@ public class VideoContentHandler implements ContentHandler {
         String width = metadata.get(Metadata.IMAGE_WIDTH);
         String height = metadata.get(Metadata.IMAGE_LENGTH);
 
-        return new VideoContent(content, file.getOriginalFilename(), duration, frameRate, width, height);
+        return new VideoContent(content, file.getOriginalFilename(), duration, frameRate, width, height,file.getContentType());
     }
 }
 

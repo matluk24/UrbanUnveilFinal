@@ -14,18 +14,18 @@ public class Content {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long Id;
 	@ManyToOne
-	private User publisher;
+	private User publisher; 
 	private StateEnum state;
 	private String title;
 	private String descr;
 	private String path;
-	private String contenttype;
+	private String contentType;
 	
 	public Content() {
 		
 	}
 	
-	public Content (User pub, StateEnum s, String title, String descr, String path) {
+	public Content (User pub, StateEnum s, String title, String descr, String path, String contentType) {
 		this.publisher = pub;
 		if(s==null) {
 			state=StateEnum.WAITING;
@@ -36,9 +36,10 @@ public class Content {
 		this.title = title;
 		this.descr = descr;
 		this.path = path;
+		this.contentType = contentType;
 	}
 	
-	public Content(Content content, String dest) {
+	public Content(Content content, String dest, String contentType) {
 		this.publisher = content.getPublisher();
 		if(content.getState()==null) {
 			state=StateEnum.WAITING;
@@ -46,7 +47,7 @@ public class Content {
 		else {
 			state=content.getState();
 		}
-		this.contenttype=content.getContenttype();
+		this.contentType=contentType;
 		this.title = content.getTitle();
 		this.descr = content.getDescr();
 		this.path = dest;	
@@ -85,11 +86,13 @@ public class Content {
 		this.path = path;
 	}
 	public String getContenttype() {
-		return contenttype;
+		return contentType;
 	}
 	public void setContenttype(String contenttype) {
-		this.contenttype = contenttype;
-		System.out.println(this.contenttype);
+		this.contentType = contenttype;
+	}
+	public boolean isEmpty() {
+		return (publisher == null) && (state == null) && (descr == null) && (title == null) && (path == null) && (contentType == null);
 	}
 
 	@Override

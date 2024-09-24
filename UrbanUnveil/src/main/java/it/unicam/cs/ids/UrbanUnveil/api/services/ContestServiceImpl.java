@@ -43,9 +43,9 @@ private ContestRepository repo;
 	}
 
 	@Override
-	public boolean remove(Contest c) {
-		if(repo.existsById(c.getId())) {
-			repo.deleteById(c.getId());
+	public boolean remove(Long id) {
+		if(repo.existsById(id)) {
+			repo.deleteById(id);
 			return true;
 		}
 		return false;

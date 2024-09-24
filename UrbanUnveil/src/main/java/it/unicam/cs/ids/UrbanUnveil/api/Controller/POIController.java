@@ -74,7 +74,7 @@ public class POIController {
 		return new ResponseEntity<POI>(service.add(node, c, userS.get(uId), null), HttpStatus.OK);
 	}
 	
-	@GetMapping("/all")
+	@GetMapping("/getAll")
 	public ResponseEntity<List<POI>> getAll() {
 			return new ResponseEntity<List<POI>>(service.getAll(), HttpStatus.OK);
 	}
@@ -88,7 +88,7 @@ public class POIController {
 	}
 	
 	@DeleteMapping("/delete")
-	public ResponseEntity<?> remove(@RequestBody Long id) {
+	public ResponseEntity<String> remove(@RequestBody Long id) {
 		if(service.removeById(id)) {
 			return new ResponseEntity<String>("Il Poi è stato eliminato correttamente", HttpStatus.OK);
 		}

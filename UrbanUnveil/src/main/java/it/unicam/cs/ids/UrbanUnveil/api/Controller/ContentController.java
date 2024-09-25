@@ -62,9 +62,6 @@ public class ContentController {
         	String contentType = file.getContentType();
         	ContentHandler handler = contentHandlerFactory.getHandler(contentType);
         	content = handler.handleContent(content, file);
-        	
-        	System.out.println(content);
-            
             //estraggo il Service giusto e salvo il file nella cartella di destinazione
             ContentService contentService = contentServiceFactory.getService(content);
             File f= new File(content.getPath());
@@ -136,7 +133,7 @@ public class ContentController {
     
     @GetMapping("/getAll")
     public ResponseEntity<List<Content>> getAll(){
-    	List contents = new LinkedList();
+    	List<Content> contents = new LinkedList<Content>();
     	contents.addAll((contentServiceFactory.getService("image")).getAll());
     	contents.addAll((contentServiceFactory.getService("video")).getAll());
     	contents.addAll((contentServiceFactory.getService("text")).getAll());

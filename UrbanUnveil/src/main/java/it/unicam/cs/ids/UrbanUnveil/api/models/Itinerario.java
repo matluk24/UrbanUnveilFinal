@@ -17,7 +17,7 @@ public class Itinerario {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long Id;
+	private Long id;
 	private String title;
 	@ManyToOne
 	private User publisher;
@@ -35,6 +35,10 @@ public class Itinerario {
 	
 	public Itinerario() {
 		
+	}
+	
+	public Long getId() {
+		return id;
 	}
 	
 	public User getPublisher() {
@@ -86,7 +90,7 @@ public class Itinerario {
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(Id, contents, publisher, stops);
+		return Objects.hash(id, contents, publisher, stops);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -97,12 +101,12 @@ public class Itinerario {
 		if (getClass() != obj.getClass())
 			return false;
 		Itinerario other = (Itinerario) obj;
-		return Objects.equals(Id, other.Id) && Objects.equals(contents, other.contents)
+		return Objects.equals(id, other.id) && Objects.equals(contents, other.contents)
 				&& Objects.equals(publisher, other.publisher) && Objects.equals(stops, other.stops);
 	}
 	@Override
 	public String toString() {
-		return "Itinerario [Id=" + Id + ", publisher=" + publisher + ", stops=" + stops + ", contents=" + contents
+		return "Itinerario [Id=" + id + ", publisher=" + publisher + ", stops=" + stops + ", contents=" + contents
 				+ "]";
 	}
 	

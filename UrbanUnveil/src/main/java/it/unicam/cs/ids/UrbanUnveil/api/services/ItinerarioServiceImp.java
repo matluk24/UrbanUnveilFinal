@@ -101,6 +101,7 @@ private ItinerarioRepository repo;
 	@Override
 	public Itinerario addContent(Long id, Content c) {
 		Itinerario i = this.get(id);
+		System.out.print(c.getClass());
 		if(i==null) {
 			return null;
 		}

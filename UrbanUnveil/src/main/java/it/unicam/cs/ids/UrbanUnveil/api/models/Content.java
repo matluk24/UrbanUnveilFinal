@@ -12,7 +12,7 @@ public class Content {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
+	private Long Id;
 	@ManyToOne
 	private User publisher; 
 	private StateEnum state;
@@ -54,7 +54,7 @@ public class Content {
 	}
 	
 	public Long getId() {
-		return id;
+		return Id;
 	}
 
 	public User getPublisher() {
@@ -97,7 +97,7 @@ public class Content {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, descr, path, publisher, state, title);
+		return Objects.hash(Id, descr, path, publisher, state, title);
 	}
 
 	@Override
@@ -109,14 +109,14 @@ public class Content {
 		if (getClass() != obj.getClass())
 			return false;
 		Content other = (Content) obj;
-		return id.equals(other.id) && descr.equals(other.descr) && path.equals(other.path)
+		return Id.equals(other.Id) && descr.equals(other.descr) && path.equals(other.path)
 				&& publisher.equals(other.publisher) && state == other.state
 				&& title.equals(other.title);
 	}
 
 	@Override
 	public String toString() {
-		return "Content {id=" + id + ", descr=" + descr + ",publisher = "+publisher+ ", path = "+path+"}";
+		return "Content {id=" + Id + ", descr=" + descr + ",publisher = "+publisher+ ", path = "+path+"}";
 	}
 	
 
